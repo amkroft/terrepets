@@ -1,0 +1,50 @@
+<h3>
+  Custom Pet Templates -
+  <%= CustomPetTemplate.count %>
+  total
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Uploader</th>
+      <th>Recipient</th>
+      <th>Author</th>
+      <th>Rights</th>
+      <% if (current_user.is_admin ) %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @custom_pet_templates.each do |custom_pet_template| %>
+      <%- user = User.find(custom_pet_template.uploader) %>
+      <tr>
+        <td><%= link_to custom_pet_template.name, custom_pet_template %></td>
+        <td><%= image_tag custom_pet_template.image %></td>
+
+        <td><%= link_to user.display_name, user_path(user) %></td>
+        <td>
+          <%- if custom_pet_template.recipient %>
+            <%- user2 = User.find(custom_pet_template.recipient) %>
+            <%= link_to user2.display_name, user_path(user2) %>
+          <%- end %>
+        </td>
+        <td><%= custom_pet_template.author %></td>
+        <td><%= custom_pet_template.rights %></td>
+        <% if (current_user.is_admin ) %>
+          <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_custom_pet_template_path(custom_pet_template) %></td>
+          <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), custom_pet_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Custom pet template', new_custom_pet_template_path %>

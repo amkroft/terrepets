@@ -1,0 +1,80 @@
+<% content_for :title, "Terrepets > Buy Favor" %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'https://js.stripe.com/v2/', :type => 'text/javascript' %>
+  <script type="text/javascript">
+    // This identifies your website in the createToken call below
+    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
+
+    jQuery(function($) {
+      $('#payment-form').submit(function(event) {
+        var $form = $(this);
+        // $form.find('button').prop('disabled', true);
+        $form.find('input[type=submit]').prop('disabled', true);
+        // $('input[type=submit]', this).attr('disabled', 'disabled');
+        Stripe.card.createToken($form, stripeResponseHandler);
+        return false;
+      });
+    });
+
+    var stripeResponseHandler = function(status, response) {
+      var $form = $('#payment-form');
+      if (response.error) {
+        $form.find('.payment-errors').text(response.error.message);
+        // $('input[type=submit]', this).removeAttr("disabled");
+        $form.find('input[type=submit]').prop('disabled', false);
+        // $form.find('button').prop('disabled', false);
+      } else {
+        var token = response.id;
+        $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+        $form.get(0).submit();
+      }
+    };
+  </script>
+<% end %>
+
+<h3>
+  Favor > Purchase
+</h3>
+
+ <ul class='tabbed'>
+  <li class='activetab'><%= link_to 'Purchase', favor_path %></li>
+  <li><%= link_to 'Tickets', favor_tickets_path %></li>
+  <li><%= link_to 'History', favor_history_path %></li>
+  <li><%= link_to 'Regraphic Pet', favor_regraphic_pet_path %></li>
+  <li><%= link_to 'Custom Pet Graphic', favor_custom_pet_path %></li>
+  <li><%= link_to 'Transfer Favor', favor_transfer_path %></li>
+</ul>
+
+<p>Quantity indicates how much Favor you wish to purchase.  Minimum is 100 Favor.  Cost is 100 favor for $1.</p>
+<%= form_tag favor_path, method: :post, :id => 'payment-form' do |f| %>
+  <div class='payment-errors' id='alert'></div>
+  <table>
+    <tbody>
+      <tr>
+        <td><label>Quantity of Favor</label></td>
+        <td><%= number_field_tag :quantity, nil, min: 0 %></td>
+      </tr>
+      <tr>
+        <td><label>Card Number</label></td>
+        <td><%= text_field_tag nil, nil, size:20, :'data-stripe' => "number", id: nil %></td>
+      </tr>
+      <tr>
+        <td><label>CVC</label></td>
+        <td><%= text_field_tag nil, nil, size:4, :'data-stripe' => "cvc", id: nil %></td>
+      </tr>
+      <tr>
+        <td><%= label_tag 'Expiration' %></td>
+        <td>
+          <%= select_month nil, {add_month_numbers_true: true}, :'data-stripe' => "exp-month", id: nil, name: nil %>
+          <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15},:'data-stripe' => "exp-year", id: nil, name: nil %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= submit_tag "Submit Payment" %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+<p class='dim'>All transactions are handled by <%= link_to 'Stripe', 'https://stripe.com', :target => '_blank' %></p>

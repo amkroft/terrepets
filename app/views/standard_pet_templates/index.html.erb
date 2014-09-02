@@ -1,0 +1,29 @@
+<h3>Standard Pet Templates</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Rights</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @standard_pet_templates.each do |standard_pet_template| %>
+      <tr>
+        <td><%= link_to standard_pet_template.name, standard_pet_template %></td>
+        <td><%= image_tag standard_pet_template.image %></td>
+        <td><%= standard_pet_template.rights %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_standard_pet_template_path(standard_pet_template) %></td>
+        <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), standard_pet_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Standard pet template', new_standard_pet_template_path %>

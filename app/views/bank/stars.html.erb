@@ -1,0 +1,24 @@
+<% content_for :title, "Terrepets > The Bank" %>
+<h3>
+  <%= link_to 'The Bank', bank_path %>
+  > Buy Stars
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'The Bank', bank_path %></li>
+  <li class='activetab'><%= link_to 'Buy Stars', bank_stars_path %></li>
+</ul>
+
+<p>Stars cost 10 monies per star.</p>
+
+<%= form_tag bank_stars_path do %>
+  <table style="margin-bottom: 0">
+    <tbody>
+      <tr>
+        <td>Quantity</td>
+        <td><%= number_field_tag :quantity, nil, min: 0%></td>
+      </tr>
+    </tbody>
+  </table>
+  <%= submit_tag "Purchase" %>
+<% end %>

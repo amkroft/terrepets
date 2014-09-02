@@ -1,0 +1,14 @@
+<h3>
+  <%= link_to 'Plaza Forums', forums_path %>
+  >
+  <%= link_to @forum.name, @forum %>
+  >
+  <%= link_to @topic.name, [@forum, @topic] %>
+  >
+  <%= link_to "Post ##{@post.id}", post_path %>
+  > Edit
+</h3>
+
+<%= render 'form' %>
+
+<%= render partial: 'markup_help' %>

@@ -1,0 +1,30 @@
+%h3
+  = link_to User.find(@pet.user_id).display_name, user_path(@pet.user_id)
+  >
+  = @pet.name
+  > Hour Logs
+= image_tag @pet.pet_template.image
+
+%ul.tabbed
+  %li= link_to 'Profile', pet_path(@pet)
+  %li= link_to 'Equip', equip_pet_path(@pet)
+  %li.activetab= link_to 'Hour Logs', pet_hour_logs_path(@pet)
+  - if @pet.can_reincarnate?
+    %li= link_to 'Reincarnate', pet_reincarnation_path(@pet)
+
+= will_paginate @hour_logs
+
+%table{style: 'width:100%'}
+  %thead
+    %tr
+      %td{style: 'width:180px'} Time
+      %td Hour
+      %td Description
+  %tbody
+    - @hour_logs.each do |hour_log|
+      %tr
+        %td= hour_log.created_at.strftime("%F, %r")
+        %td.centered= hour_log.hour
+        %td= hour_log.description.html_safe
+
+= will_paginate @hour_logs

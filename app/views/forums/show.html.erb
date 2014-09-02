@@ -1,0 +1,111 @@
+<h3>
+  Plaza
+  >
+  <%= link_to 'Forums', forums_path %>
+  >
+  <%= @forum.name %>
+</h3>
+
+<ul class='tabbed'>
+  <li class='activetab'><%= link_to 'Forums', forums_path %></li>
+  <li><%= link_to 'IRC', forums_irc_path %></li>
+  <li><%= link_to 'Stars Given', forums_stars_given_path %></li>
+  <li><%= link_to 'Stars Received', forums_stars_received_path %></li>
+</ul>
+
+<p>
+  <%= @forum.description %>
+</p>
+<% if can?(:create, Topic) && !@forum.name.eql?('City Hall') %>
+  <ul>
+    <li><%= link_to "New Topic", new_forum_topic_path(:forum_id => @forum.id) %></li>
+  </ul>
+<% end %>
+
+<table class="forumtb" width="100%"> 
+  <thead> 
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Replies</th>
+      <th>Last Poster</th>  
+      <th>Last Post</th>
+      <th></th>
+      <% if current_user.is_admin %>
+    	  <th></th>
+  	  <% end %>
+    </tr>  
+  </thead>
+
+  <tbody>
+    <% for topic in @stickied_topics %>
+      <tr>
+        <td>
+          <% if topic.icon %>
+            <i class="fa fa-<%= topic.icon %> fa-lg"></i>
+          <% end %>
+        </td>
+        <td><%= link_to h(topic.name), forum_topic_path(@forum,topic) %></td>
+        <td><%= link_to topic.user.display_name, user_path(topic.user_id) %></td>
+        <td><%= topic.posts.size-1 %></td>
+        <td><%= User.find(topic.last_poster_id).display_name %></td>
+        <td><% if topic.last_post_at %><%= distance_of_time_in_words_to_now topic.last_post_at %> ago<% else %>No Posts<% end %></td>
+        <td>
+          <% if can? :edit, topic %>
+            <%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_forum_topic_path(@forum,topic) %>
+          <% end %>
+        </td>
+        <% if current_user.is_admin %>
+          <td>
+            <%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), forum_topic_path(@forum,topic), data: { :confirm => 'Are you sure?' }, :method => :delete %>
+          </td>  
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tbody>
+    <% if @stickied_topics.any? %>
+      <tr style="background-color: #4e6612;">
+        <th colspan="<%= current_user.is_admin ? 8 : 7 %>" class="centered" height='1'></th>
+      </tr>
+    <% end %>
+    <% for topic in @topics %>
+      <tr>
+        <td>
+          <% if topic.icon %>
+            <i class="fa fa-<%= topic.icon %> fa-lg"></i>
+          <% end %>
+        </td>
+        <td><%= link_to h(topic.name), forum_topic_path(@forum,topic) %></td>
+        <td><%= link_to topic.user.display_name, user_path(topic.user_id) %></td>
+        <td><%= topic.posts.size-1 %></td>
+        <td><%= User.find(topic.last_poster_id).display_name %></td>
+        <td><% if topic.last_post_at %><%= distance_of_time_in_words_to_now topic.last_post_at %> ago<% else %>No Posts<% end %></td>
+        <td>
+          <% if can? :edit, topic %>
+            <%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_forum_topic_path(@forum,topic) %>
+          <% end %>
+        </td>
+        <% if current_user.is_admin %>
+          <td>
+            <%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), forum_topic_path(@forum,topic), data: { :confirm => 'Are you sure?' }, :method => :delete %>
+          </td>  
+        <% end %>
+      </tr>
+    <% end %>  
+  </tbody>
+
+</table>  
+
+<% if can? :create, Topic && @forum.id != 9 %>
+  <ul>
+    <li><%= link_to "New Topic", new_forum_topic_path(:forum_id => @forum.id) %></li>
+  </ul>
+<% end %>
+<p class='bold'>
+  <%= link_to 'Plaza Forums', forums_path %>
+  >
+  <%= @forum.name %>
+</p>

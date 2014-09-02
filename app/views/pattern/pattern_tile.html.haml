@@ -1,0 +1,40 @@
+- content_for :title, "Terrepets > Place Pattern Tile"
+%h3
+  = link_to 'The Pattern', pattern_path
+  >
+  Place Tile
+
+%ul.tabbed
+  %li.activetab= link_to 'Navigate', pattern_path
+  %li= link_to 'Overview', pattern_overview_path
+
+%div#pattern_tiles
+  - (@y+1).downto(@y-1).each do |y|
+    - ((@x-1)..(@x+1)).each do |x|
+      - key = "#{x}-#{y}".to_sym
+      %div.pattern_tile{ id: key }
+        - if @surrounding_tiles.has_key? key
+          = @surrounding_tiles[key].text_tile.html_safe
+        - elsif y == @y && x == @x
+          = "<font color='orange'>#{PatternTile.empty_tile}</font>".html_safe
+        - else
+          = PatternTile.empty_tile.html_safe
+    %div.endinventory
+  %div.endinventory
+
+%p Select tile to place
+
+= form_tag place_pattern_tile_path do |f|
+  %table#toolbar
+    %tbody
+      %tr
+        %td= submit_tag 'Place Tile'
+  = hidden_field_tag :x, @x
+  = hidden_field_tag :y, @y
+  %table#items
+    %tbody
+      - @available_tiles.each do |tile|
+        %tr
+          %td= radio_button_tag 'tile', tile.id
+          %td= PatternTile.simple_tiles[tile.item_template.name.to_sym]
+          %td= tile.item_template.name

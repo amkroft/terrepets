@@ -1,0 +1,16 @@
+<h3>
+  <%= link_to 'Standard Avatars', standard_avatars_path %>
+  >
+  <%= @standard_avatar.name %>
+  <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_standard_avatar_path(@standard_avatar) %></td>
+</h3>
+
+<p>
+  <%= image_tag @standard_avatar.image %>
+</p>
+
+<p>
+  <strong>Rights:</strong>
+  <%= @standard_avatar.rights %>
+</p>
+

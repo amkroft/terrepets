@@ -1,0 +1,40 @@
+<%= form_for(@custom_pet_template) do |f| %>
+  <% if @custom_pet_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@custom_pet_template.errors.count, "error") %> prohibited this custom_pet_template from being saved:</h2>
+
+      <ul>
+      <% @custom_pet_template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.file_field :uploaded_file, accept: 'image/png,image/gif,image/jpeg' %>
+  </div>
+  <div class="field">
+    <%= f.label :uploader %><br>
+    <%= f.number_field :uploader %>
+  </div>
+  <div class="field">
+    <%= f.label :recipient %><br>
+    <%= f.number_field :recipient %>
+  </div>
+  <div class="field">
+    <%= f.label :author %><br>
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :rights %><br>
+    <%= f.text_field :rights %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

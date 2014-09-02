@@ -1,0 +1,37 @@
+<p>
+  <strong>Item template:</strong>
+  <%= @item.item_template_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @item.item_template.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @item.user_id %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= Item.locations[@item.location] %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @item.price %>
+</p>
+
+<p>
+  <strong>Origin Note</strong>
+  <%= @item.origin_note %>
+</p>
+
+<p>
+  <strong>User Note</strong>
+  <%= @item.user_note %>
+</p>
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>

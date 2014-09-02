@@ -1,0 +1,45 @@
+<% content_for :title, "Terrepets > Account Settings" %>
+<h3>Account Settings</h3>
+
+<ul class='tabbed'>
+  <li class='activetab'><%= link_to 'General', my_account_index_path %></li>
+  <li><%= link_to 'Avatar', my_account_avatar_path %></li>
+  <li><%= link_to 'Stats', my_account_stats_path %></li>
+  <li><%= link_to 'Profile', my_account_profile_path %></li>
+</ul>
+
+<h4>Set Time Zone</h4>
+<%= form_for current_user do |f| %>
+  <%= f.label :time_zone %>
+  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)" %>
+  <br/>
+  <%= f.submit 'Save' %>
+<% end %>
+
+<h4> Change Password </h4>
+<%= form_for(current_user, :url => update_password_path(current_user), :html => { :method => :put }) do |f| %>
+
+  <p>
+    <%= f.label :current_password %><br />
+    <%= f.password_field :current_password %>
+  </p>
+
+  <p>
+    <%= f.label :password, "New password" %><br />
+    <%= f.password_field :password %>
+  </p>
+
+  <p>
+    <%= f.label :password_confirmation, "Confirm new password" %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+
+  <p><%= f.submit "Change my password" %></p>
+<% end %>
+
+<h4>Change Email</h4>
+<%= form_for current_user do |f| %>
+  <%= f.label :update_email %>
+  <%= f.text_field :email %>
+  <%= f.submit 'Save' %>
+<% end %>

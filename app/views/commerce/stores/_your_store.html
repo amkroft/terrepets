@@ -1,0 +1,45 @@
+<%= form_tag stores_buy_path(@user.id), method: :post do |j| %>
+  <div id='toolbarholder'>
+    <div id='toolbar'>
+      <%= submit_tag 'Buy' %>
+    </div>
+  </div>
+
+  <table id='items'>
+
+    <thead>
+      <tr>
+        <!-- <td>Quantity</td> -->
+        <td></td>
+        <td></td>
+        <td>Item</td>
+        <td>Price</td>
+        <td>Notes</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <%= fields_for "items[]", item do |f| %>
+          <tr>
+            <!-- <td><%= number_field_tag 'quantity' %></td> -->
+            <td><%= check_box_tag "items[]", item.id %></td>
+            <!-- <td><%= image_tag(item.item_template.image) %></td> -->
+            <td><%= item_encyclopedia_link(item.item_template.name) %></td>
+            <td><%= item.item_template.name %></td>
+            <td><%= item.price %></td>
+            <td>
+              <%= item.origin_note %>
+              <% if item.user_note && item.origin_note %>
+                <br>
+              <% end %>
+              <%= item.user_note %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+
+  </table>
+  
+<% end %>

@@ -1,0 +1,13 @@
+<h3>
+  Plaza
+  >
+  <%= link_to 'Forums', forums_path %>
+  >
+  <%= link_to @forum.name, forum_path(@forum.id) %>
+  >
+  New topic
+</h3>
+
+ <%= render 'form' %>
+
+

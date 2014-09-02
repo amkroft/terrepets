@@ -1,0 +1,30 @@
+<h3>
+  <%= link_to 'Custom Pet Templates', custom_pet_templates_path %>
+  >
+  <%= @custom_pet_template.name %>
+  <td><%= link_to raw("<i class='fa fa-pencil' alt='Edit' title='Edit'></i>"), edit_custom_pet_template_path(@custom_pet_template) %></td>
+</h3>
+
+<p>
+  <%= image_tag @custom_pet_template.image %>
+</p>
+
+<p>
+  <strong>Uploader:</strong>
+  <%= @custom_pet_template.uploader %>
+</p>
+
+<p>
+  <strong>Recipient:</strong>
+  <%= @custom_pet_template.recipient %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @custom_pet_template.author %>
+</p>
+
+<p>
+  <strong>Rights:</strong>
+  <%= @custom_pet_template.rights %>
+</p>

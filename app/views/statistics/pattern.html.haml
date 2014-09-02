@@ -1,0 +1,38 @@
+- content_for :title, "Terrepets > Pattern Stats"
+%h3
+  = link_to 'Statistics', statistics_path
+  \> Pattern
+
+%ul.tabbed
+  %li= link_to 'General', statistics_path
+  %li= link_to 'Giving Tree', statistics_giving_tree_path
+  %li.activetab= link_to 'Pattern', statistics_pattern_path
+  %li= link_to 'Recycling', statistics_recycling_path
+
+%p
+  %strong Total Maze Pieces Placed:
+  = @stats[:maze_pieces_placed]
+
+%table
+  %thead
+    %tr
+      %td{colspan: 2} Top 10 Piece Placers
+  %tbody
+    - @top_placers.each do |top_placer|
+      %tr
+        %td= link_to top_placer.display_name, user_path(top_placer.id)
+        %td= top_placer.user_statistic.maze_pieces_placed
+
+%p
+  %strong Total Pattern Obstacles Cleared:
+  = @stats[:pattern_obstacles_cleared]
+
+%table
+  %thead
+    %tr
+      %td{colspan: 2} Top 10 Obstacle Clearers
+  %tbody
+    - @top_clearers.each do |top_clearer|
+      %tr
+        %td= link_to top_clearer.display_name, user_path(top_clearer.id)
+        %td= top_clearer.user_statistic.pattern_obstacles_cleared

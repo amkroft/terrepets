@@ -1,0 +1,53 @@
+<%= will_paginate @users %>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= sortable 'display_name' %></th>
+      <% if current_user.is_admin %>
+        <th><%= sortable 'username' %></th>
+        <th><%= sortable 'email' %></th>
+      <% end %>
+      <th>Avatar</th>
+      <td><%= sortable 'created_at', 'Join Date' %></td>
+      <th>Timezone</th>
+      <th><%= sortable 'last_active' %></th>
+      <% if current_user.is_admin %>
+        <th>IP</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <% if !user.is_npc %> <!--Checks to see if the user is not a npc, if not display the user -->
+        <tr>      
+          <td><%= link_to user.display_name, user_path(user) %></td>
+          <% if current_user.is_admin %>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+          <% end %>  
+          <td>
+            <% if user.avatar %>
+              <%= image_tag(user.avatar.image) %>
+            <% end %>
+          </td>
+          <td><%= user.created_at.strftime("%b %-d, %Y") %></td> 
+          <td><%= user.time_zone %></td>
+          <td><%= user.last_active.strftime('%D %r') %></td>
+          <% if current_user.is_admin %>
+            <td><%= user.current_sign_in_ip %></td>
+            <td><%= link_to raw("<i class='fa fa-search fa-lg' alt='Show' title='Show'></i>"), user_path(user) %></td>
+            <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_user_path(user) %></td>
+            <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), user_path(user), method: :delete, data: { confirm: 'Are you sure you want to delete this user?' } %></td>
+          <% end %> 
+        </tr>
+      <% end%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @users %>

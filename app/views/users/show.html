@@ -1,0 +1,131 @@
+<% content_for :title, "Terrepets > #{@user.display_name}" %>
+
+<h3>
+  <%= link_to 'Users', users_path %>
+  >
+  <%= @user.display_name %>
+</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <% if @user.avatar %>
+          <%= image_tag(@user.avatar.image) %>
+        <% end %>
+      </td>
+      <td>
+        <% if @user.is_admin %>
+          <i class='fa fa-star'></i>
+        <% end %>
+        <%= @user.display_name %>
+        <% if @user.user_badge.badges.any? %>
+          <br>
+          <% @user.user_badge.badges.each do |badge| %>
+            <%= image_tag "#{badge}.png", title: badge.to_s.titleize %>
+          <% end %>
+        <% end %>
+        <br>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<% if current_user %>
+  <ul>
+    <% if current_user.id == @user.id %>
+      <li><%= link_to 'My Store', stores_path(@user) %></li>
+      <li><%= link_to 'My Wiki Page', "http://wiki.terrepets.com/index.php?title=User:#{URI.escape(@user.display_name)}", target: :_blank %></li>
+      <li><%= link_to 'Edit Profile', my_account_profile_path %></li>
+    <% else %>
+      <li><%= link_to 'User Store', stores_path(@user) %></li>
+      <li><%= link_to 'User Wiki Page', "http://wiki.terrepets.com/index.php?title=User:#{URI.escape(@user.display_name)}", target: :_blank %></li>
+      <li><%= link_to 'Message User', new_internal_mail_path(to_user_id: @user.id, to_user_name: @user.display_name) %></li>
+    <% end %>
+    <li>
+      Last active
+      <%= distance_of_time_in_words_to_now @user.last_active %>
+      ago.
+    </li>
+    <li>
+      Signed up
+      <%= distance_of_time_in_words_to_now @user.created_at %>
+      ago (on <%= @user.created_at.strftime('%F') %>)
+    </li>
+
+  </ul>
+<% else %>
+  <ul>
+    <li><%= link_to 'User Wiki Page', "http://wiki.terrepets.com/index.php?title=User:#{URI.escape(@user.display_name)}", target: :_blank %></li>
+    <li>
+      Signed up
+      <%= distance_of_time_in_words_to_now @user.created_at %>
+      ago (on <%= @user.created_at.strftime('%F') %>)
+    </li>
+  </ul>
+<% end %>
+
+<hr>
+
+<% if @user.profile && !@user.profile.empty? %>
+  <%= clean_post_content(@user.profile).html_safe %>
+  <hr>
+<% end %>
+
+<h4>Pets</h4>
+
+<div id='profilepets'>
+  <% @user.pets.each do |pet| %>
+    <div class='profilepet'>
+      <div class='petimage'>
+        <% if pet.pet_template %>
+          <%= link_to image_tag(pet.pet_template.image), pet_path(pet) %>
+        <% else %>
+          <%= image_tag 'pets/none.png' %>
+        <% end %>
+      </div>
+      <div class='centered'>
+        <div class='petlevel'>
+          Level
+          <%= pet.level %>
+          <br>
+          <% if pet.male? %>
+            ♂
+          <% else %>
+            ♀
+          <% end %>
+          <%= pet.name %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class='endinventory'></div>
+
+<!-- Show time zone? -->
+
+<% if current_user && current_user.is_admin %>
+  <hr>
+  <h4>Admin Information</h4>
+  <ul>
+    <li>
+      IP Address:
+      <%= @user.current_sign_in_ip %>
+    </li>
+    <li>
+      Sign in count:
+      <%= @user.sign_in_count %>
+    </li>
+    <li>
+      Time zone:
+      <%= @user.time_zone %>
+    </li>
+  </ul>
+  <h4>Admin Functions</h4>
+  <ul>
+    <li><%= button_to "Award 500 monies", user_award_path(@user) %></li>
+    <li><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i> Edit User"), edit_user_path(@user) %></li>
+  </ul>
+<% end %>

@@ -1,0 +1,24 @@
+- content_for :title, "Terrepets > Giving Tree Stats"
+%h3
+  = link_to 'Statistics', statistics_path
+  \> Giving Tree
+
+%ul.tabbed
+  %li= link_to 'General', statistics_path
+  %li.activetab= link_to 'Giving Tree', statistics_giving_tree_path
+  %li= link_to 'Pattern', statistics_pattern_path
+  %li= link_to 'Recycling', statistics_recycling_path
+
+%p
+  %strong Total Gifted Items:
+  = @total_gifted
+
+%table
+  %thead
+    %tr
+      %td{colspan: 2} Top 15 Gifters
+  %tbody
+    - @top_gifters.each do |top_gifter|
+      %tr
+        %td= link_to top_gifter.display_name, user_path(top_gifter.id)
+        %td= top_gifter.user_statistic.gifted_items

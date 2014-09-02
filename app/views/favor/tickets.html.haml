@@ -1,0 +1,37 @@
+- content_for :title, "Terrepets > Redeem Magic Tickets"
+
+%h3 
+  =link_to 'Favor', favor_path
+  > Redeem Tickets
+
+%ul.tabbed
+  %li= link_to 'Purchase', favor_path
+  %li.activetab= link_to 'Tickets', favor_tickets_path
+  %li= link_to 'History', favor_history_path
+  %li= link_to 'Regraphic Pet', favor_regraphic_pet_path
+  %li= link_to 'Custom Pet Graphic', favor_custom_pet_path
+  %li= link_to 'Transfer Favor', favor_transfer_path
+
+%p
+  The following Magic Tickets can be redeemed for a small, random amount of Favor.
+
+
+= form_tag favor_redeem_tickets_path, method: :post do
+  %table
+    %thead
+      %tr
+        %td
+          %input{type: "checkbox", onclick: "checkAll(this)"}
+        %td Name
+        %td Note
+    %tbody
+      - @tickets.each do |ticket|
+        %tr
+          %td= check_box_tag 'items[]', ticket.id
+          %td= ticket.item_template.name
+          %td
+            = ticket.origin_note
+            - if ticket.user_note && ticket.origin_note
+              %br
+            = ticket.user_note
+  = submit_tag 'Redeem'

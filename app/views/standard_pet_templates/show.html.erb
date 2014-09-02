@@ -1,0 +1,15 @@
+<h3>
+  <%= link_to 'Standard Pet Templates', standard_pet_templates_path %>
+  >
+  <%= @standard_pet_template.name %>
+  <td><%= link_to raw("<i class='fa fa-pencil' alt='Edit' title='Edit'></i>"), edit_standard_pet_template_path(@standard_pet_template) %></td>
+</h3>
+
+<p>
+  <%= image_tag @standard_pet_template.image %>
+</p>
+
+<p>
+  <strong>Rights:</strong>
+  <%= @standard_pet_template.rights %>
+</p>

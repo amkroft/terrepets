@@ -1,0 +1,37 @@
+- content_for :title, "Terrepets > Pattern Shop"
+%h3
+  Services
+  >
+  Pattern Shop
+
+%ul.tabbed
+  %li= link_to 'Giving Tree', giving_tree_path
+  %li= link_to 'Grocery Store', grocery_store_path
+  %li.activetab= link_to 'Pattern Shop', pattern_shop_path
+  %li= link_to 'Recycling', recycling_path
+
+%p
+  Welcome to the Pattern Shop!  Here you can trade any of the following items for a random Maze Piece:
+  %br
+  = @_acceptable_items.map(&:name).join(', ')
+  
+= form_tag pattern_shop_path do |f|
+  
+  %div{style: "height: 35px;"}
+    %table#toolbar
+      %tbody
+        %tr
+          %td= submit_tag 'Trade'
+  %table#items
+    %thead
+      %tr
+        %th
+          %input{type: "checkbox", onclick: "checkAll(this)"}
+        %th
+        %th
+    %tbody
+      - @acceptable_items.each do |item|
+        %tr
+          %td= check_box_tag 'items[]', item.id
+          %td= item_encyclopedia_link(item.item_template.name)
+          %td= item.item_template.name

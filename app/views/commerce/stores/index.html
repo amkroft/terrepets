@@ -1,0 +1,23 @@
+<% content_for :title, "Terrepets > Stores" %>
+<h3>
+	Commerce > 
+  Stores >
+  <%= @user.display_name %>
+</h3>
+
+<ul class='tabbed'>
+	<li><%= link_to 'Trading Post', trading_post_path %></li>
+	<li><%= link_to 'Flea Market', flea_market_path %></li>
+	<li class='activetab'><%= link_to 'Stores', stores_path %></li>
+	<li><%= link_to 'Store Logs', store_logs_path %></li>
+</ul>
+
+<% if @items.any? %>
+	<% if @user.id == current_user.id %>
+		<%= render 'my_store' %>
+	<% else %>
+		<%= render 'your_store' %>
+	<% end %>
+<% else %>
+	No items for sale.
+<% end %>

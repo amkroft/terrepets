@@ -1,0 +1,47 @@
+<h3>
+  <%= link_to 'Plaza Forums', forums_path %>
+  >
+  <%= link_to @forum.name, @forum %>
+  >
+  <%= link_to @topic.name, [@forum, @topic] %>
+  >
+  New post
+</h3>
+
+<%= render 'form' %>
+
+<h4>Previous Few Posts</h4>
+<% @previous_posts.each do |post| %>
+  <div class='plazapost' id="post_<%= post.id %>">
+    <div class='plazapost-titlebar'>
+      <div class='plazapost-decoration'>
+      </div>
+      <div class='plazapost-title'>
+        <% if post.id == @topic.first_post_id %>
+          <% @topic.name %>
+        <% end %>
+      </div>
+    </div>
+    <div class='plazapost-mainbox'>
+      <div class='plazapost-resident'>
+        <%= link_to post.user.display_name,user_path(post.user) %>
+        <% if post.user.avatar %>
+          </br><%= image_tag(post.user.avatar.image) %>
+        <% end %>
+      </div>
+      <div class='plazapost-contentbox'>
+        <div class='plazapost-content'>
+          <%= clean_post_content(post.content).html_safe %>
+        </div>
+        <div class='plazapost-footer'>
+          <div class='dim em'>
+            Posted
+            <%= post.created_at.strftime("%Y.%m.%d %l:%M%P") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render partial: 'markup_help' %>

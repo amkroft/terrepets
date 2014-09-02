@@ -1,0 +1,54 @@
+<h3>
+  <%= link_to 'Pet Shelter', pet_shelter_path %>
+  >
+  Adopt A Pet
+</h3>
+
+<% content_for :title, "Terrepets > Pet Shelter > Adopt Pet " %>
+<ul class='tabbed'>
+	<li class='activetab'><%= link_to 'Adopt a Pet', pet_shelter_path %></li>
+	<li><%= link_to 'Give Up a Pet', give_up_path %></li>
+	<li><%= link_to 'Rename Pets', rename_path %></li>
+</ul>
+
+<p>
+	You are only allowed to adopt one pet every 24 hours, so choose wisely.
+</p>
+
+<% if @petsshelter.any? %> <!--If the sheleter has any pets owned by the shelter user -->
+	<%= form_tag adopt_pet_path, method: :post do |f| %>
+		<table>
+			<thead>
+				<tr>
+				<th></td>
+				<th>Image</th>
+				<th>Lvl</th>
+				<th>Name</th>
+				<th>Birthday</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <% @petsshelter.each do |pet| %>
+					<tr>
+					  <td><%= radio_button_tag 'pet', pet.id %></td>
+					  <td><%= link_to image_tag(pet.pet_template.image), pet_path(pet) %></td>
+					  <td><%= pet.level %></td>
+					  <td>
+					  	<% if pet.male? %>
+        				♂
+      				<% else %>
+        				♀
+      				<% end %>
+					  	<%= pet.name %>
+					  </td>
+					  <td><%= pet.birthday.strftime("%b %-d, %Y") %></td>
+					</tr>
+			  <% end %>
+			</tbody>
+		</table>
+		<hr>
+		<%= submit_tag "Adopt Pet" %>
+	<% end %>
+<% else %> <!--If not display no pets for adoption -->
+	<h4>No pets avilable for adoption</h4>
+<% end %>

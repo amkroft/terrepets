@@ -1,0 +1,28 @@
+<% content_for :title, "Terrepets > Avatar" %>
+<h3>
+  <%= link_to 'Account Settings', my_account_index_path %>
+  > Avatar
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'General', my_account_index_path %></li>
+  <li class='activetab'><%= link_to 'Avatar', my_account_avatar_path %></li>
+  <li><%= link_to 'Stats', my_account_stats_path %></li>
+  <li><%= link_to 'Profile', my_account_profile_path %></li>
+</ul>
+
+<h4>Standard Avatars</h4>
+
+<%= form_tag my_account_avatar_path do |f| %>
+  <% @standard_avatars.each do |standard_avatar| %>
+    <div class="avatar_choice">
+      <%= image_tag standard_avatar.image %>
+      <br>
+      <div style="padding-left: 15px;">
+        <%= radio_button_tag("avatar", standard_avatar.id, current_user.avatar_type.eql?('StandardAvatar') && current_user.avatar_id == standard_avatar.id) %>
+      </div>
+    </div>
+  <% end %>
+  <div style="clear: left;"></div>
+  <%= submit_tag 'Update' %>
+<% end %>

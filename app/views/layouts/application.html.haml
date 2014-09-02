@@ -1,0 +1,45 @@
+!!! html5
+%html
+  %head
+    - if content_for? :title
+      %title= yield :title
+    - else
+      %title TerrePets
+    
+    = favicon_link_tag 'favicon.ico'
+    = favicon_link_tag 'apple-touch-icon-152x152.png', rel: 'apple-touch-icon', type: 'image/png'
+    %meta{ :name => 'description', :content => 'Free browser-based pet game.' }
+    %meta{ :name => 'keywords', :content => 'pet,game,online,browser,virtual,fantasy,earth,terre,nature,terrepets,psypets' }
+    %meta{ :name => 'author', :content => 'Amanda Kroft' }
+    %meta{ :name => 'designer', :content => 'Amanda Kroft' }
+    %meta{ :name => 'powered-by', :content => 'Sparkles and Moon Dust' }
+    %meta{ :name => 'stripe-key', :content => STRIPE_PUBLIC_KEY }
+
+    = stylesheet_link_tag '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
+    
+    = stylesheet_link_tag 'application', :media => 'all'
+    = javascript_include_tag 'application'
+    / = javascript_include_tag 'modernizr-rails'
+    = csrf_meta_tags
+
+    = yield :head
+
+  %body
+    #mainbox
+      #header
+        / .title
+        / = render 'shared/header'
+        / TerrePets
+        = link_to image_tag('terrepets_banner.png'), root_path
+      #navbar
+        - if user_signed_in?
+          = render 'shared/navbar_loggedin'	  
+        - elsif !['sessions', 'registrations', 'passwords'].include? controller_name
+          = render 'shared/navbar_login'
+      #contentbox
+        %p#notice= raw(notice)
+        %p#alert= raw(alert)
+        = yield
+        %hr
+      %footer
+        = render 'shared/footer'

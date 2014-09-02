@@ -1,0 +1,54 @@
+<% content_for :title, "Terrepets > Plaza > Forums" %>
+<h3>
+  Plaza > Forums
+</h3>
+
+<ul class='tabbed'>
+  <li class='activetab'><%= link_to 'Forums', forums_path %></li>
+  <li><%= link_to 'IRC', forums_irc_path %></li>
+  <li><%= link_to 'Stars Given', forums_stars_given_path %></li>
+  <li><%= link_to 'Stars Received', forums_stars_received_path %></li>
+</ul>
+
+<% if can? :create, Forum %>
+  <ul>
+    <li><%= link_to 'New Forum', new_forum_path %></li>
+  </ul>
+<% end %>
+
+<table class='forumtb' width="100%">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th style='text-align:left;'>Last Post </th>
+      <% if (current_user.is_admin ) %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @forums.each do |forum| %>
+      <tr>
+        <td>
+          <%= link_to forum.name, forum_path(forum) %>
+          <br>
+          <%= forum.description %>
+        </td>
+        <td>
+          <% most_recent_topic = forum.most_recent_topic %>
+          <% if most_recent_topic %>
+            <%= distance_of_time_in_words_to_now most_recent_topic.last_post_at %> ago
+          <% else %>
+            No Posts
+          <% end %>
+        </td>  
+        <% if (current_user.is_admin ) %>
+		      <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_forum_path(forum) %></td>
+          <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), forum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		    <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

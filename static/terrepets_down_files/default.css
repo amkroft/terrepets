@@ -1,0 +1,20 @@
+#mainbox {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  padding: 10px;
+}
+
+#title {
+  color: #8f4306;
+  font-weight: bold;
+  font-size: 40px;
+  float: left;
+}
+
+#subtitle {
+  color: #00892c;
+  font-weight: bold;
+  font-size: 1.5em;
+}

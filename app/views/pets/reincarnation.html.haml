@@ -1,0 +1,133 @@
+- content_for :title, "TerrePets > Reincarnate Pet"
+
+:css
+  .field {
+    margin-bottom: 0px;
+  }
+
+%h3
+  = link_to User.find(@pet.user_id).display_name, user_path(@pet.user_id)
+  >
+  = @pet.name
+  > Reincarnate
+= image_tag @pet.pet_template.image
+
+%ul.tabbed
+  %li= link_to 'Profile', pet_path(@pet)
+  %li= link_to 'Equip', equip_pet_path(@pet)
+  %li= link_to 'Hour Logs', pet_hour_logs_path(@pet)
+  %li.activetab= link_to 'Reincarnate', pet_reincarnation_path(@pet)
+
+%p
+  = @pet.name
+  has mastered
+  = pluralize(@pet.masteries_array.size, 'profession') + '!'
+  = @pet.name
+  can now be reincarnated.
+
+%p
+  Reincarnation is the process of your pet shedding it's old life to start anew. Your pet will no longer have the old skills or level and will become a whole new pet, but not really! Your pet's reincarnation history is tracked and pet badges are kept across reincarnations. You will also gain Karma depending on the number of professions
+  = @pet.name
+  has mastered.
+
+/ %p
+/   Reincarnation is the process of your pet shedding it's old life to start anew.  Your pet will no longer have the old skills or level and will become a whole new pet, but not really!  It will gain a few points in random skills, just as a new pet would.  You will also gain Karma depending on the number of professions
+/   = @pet.name
+/   has mastered.
+
+/ = button_to "Reincarnate Pet", pet_reincarnate_path(@pet), confirm: "Are you sure you want to reincarnate #{@pet.name}?"
+
+
+= form_tag pet_reincarnate_path(@pet) do |f|
+
+  - if @error
+    #error_explanation= @error
+
+  %h4 Appearance
+  - if @pet.pet_template_type == 'StandardPetTemplate'
+    You may choose a new graphic for
+    = "#{@pet.name}."
+
+    %div
+      - StandardPetTemplate.all.each do |pet_template|
+        %div.pet_template_choice{style: 'display: inline-block'}
+          = image_tag pet_template.image
+          %br
+          %div{style: "padding-left: 15px;"}
+            = radio_button_tag 'pet_template', pet_template.id, @pet.pet_template_id == pet_template.id
+    %div.clear
+
+  - else
+    = @pet.name
+    has a custom graphic and therefore cannot have 
+    = @pet.female? ? 'her' : 'his'
+    appearance changed during reincarnation.
+
+  %h4 Survey
+
+  %u Physical and Mental Traits
+  %br
+  Your pet is very ...
+
+  %div.field
+    = radio_button_tag 'physical_trait', :strength
+    = label_tag :strong
+  %div.field
+    = radio_button_tag 'physical_trait', :dexterity
+    = label_tag :dexterous
+  %div.field
+    = radio_button_tag 'physical_trait', :stamina
+    = label_tag :tough
+
+  \... and ...
+
+  %div.field
+    = radio_button_tag 'mental_trait', :intelligence
+    = label_tag :intelligent
+  %div.field
+    = radio_button_tag 'mental_trait', :perception
+    = label_tag :perceptive
+  %div.field
+    = radio_button_tag 'mental_trait', :wits
+    = label_tag :witty
+  %br
+
+  %u Skills and Knowledges
+  %br
+  Choose any two!
+  %br
+  %div.field
+    = check_box_tag 'skills[]', :athletics
+    = label_tag :athletics
+  %div.field
+    = check_box_tag 'skills[]', :stealth
+    = label_tag :stealth
+  %div.field
+    = check_box_tag 'skills[]', :gathering
+    = label_tag :gathering
+  %div.field
+    = check_box_tag 'skills[]', :fishing
+    = label_tag :fishing
+  %div.field
+    = check_box_tag 'skills[]', :mining
+    = label_tag :mining
+  %div.field
+    = check_box_tag 'skills[]', :crafting
+    = label_tag :crafting
+  %div.field
+    = check_box_tag 'skills[]', :thieving
+    = label_tag :thieving
+  %div.field
+    = check_box_tag 'skills[]', :lumberjacking
+    = label_tag :lumberjacking
+
+  / %u Personality
+  / %u Pet Advantages
+
+  %br
+  %em 
+    (The tool
+    = @pet.name
+    is holding will be dropped in your House.)
+  %br
+  = submit_tag 'Reincarnate', confirm: "Are you sure you want to reincarnate #{@pet.name}?"

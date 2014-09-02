@@ -1,0 +1,75 @@
+/* Megamenu */
+
+ul.megamenu {
+  margin: 4px 0 0 0;
+  list-style: none;
+  /*display: none;*/
+  /*z-index: 1;*/
+  padding-left: 3px;
+  /*color: #4e6612;*/
+  background: #4e6612;
+  border-top: 1px solid #999;
+  height: 100%;
+}
+
+ul.megamenu li.mm-item {
+}
+
+ul.megamenu li div ul li a
+{
+  display: block;
+  border-radius: 3px;
+}
+
+ul.megamenu li {
+  float: left;
+  margin: 5px;
+  padding: 5px;
+}
+
+ul.megamenu li.clear-fix {
+  float: none;
+  clear: both;
+  margin: 0px;
+  padding: 0px;
+  height: 0px;
+  font-size: 0px;
+  line-height: 0px;
+}
+
+ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
+  position: relative;
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 0 3px 0 0;
+  text-decoration: none;
+  z-index: 10;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+
+ul.megamenu div.mm-item-content {
+  padding: 0px;
+  position: absolute;
+  z-index: 9;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+ul.megamenu div.column
+{
+  float: left;
+  width: 150px;
+  padding: 5px;
+}
+
+ul.megamenu div.column img
+{
+  vertical-align: middle; 
+}
+
+ul.megamenu div.column li.separator
+{
+  margin-top: 1.0em;
+}

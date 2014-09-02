@@ -1,0 +1,66 @@
+<% content_for :title, "Terrepets > General Stats" %>
+<h3>
+  Statistics
+  > General
+</h3>
+
+<ul class='tabbed'>
+  <li class='activetab'><%= link_to 'General', statistics_path %>
+  <li><%= link_to 'Giving Tree', statistics_giving_tree_path %>
+  <li><%= link_to 'Pattern', statistics_pattern_path %>
+  <li><%= link_to 'Recycling', statistics_recycling_path %>
+</ul>
+
+<h4>Counts</h4>
+<table>
+  <thead>
+    <tr>
+      <td>Object Type</td>
+      <td>Count</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @counts.each do |key, value| %>
+      <tr>
+        <td><%= key %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h4>Averages</h4>
+<table>
+  <thead>
+    <tr>
+      <td>Stat</td>
+      <td>Average</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @averages.each do |key, value| %>
+      <tr>
+        <td><%= key %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h4>Other</h4>
+<table>
+  <thead>
+    <tr>
+      <td>Stat</td>
+      <td>Value</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @other.each do |key, value| %>
+      <tr>
+        <td><%= key %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,28 @@
+- content_for :title, "Terrepets > Recycling Stats"
+%h3
+  = link_to 'Statistics', statistics_path
+  \> Recycling
+
+%ul.tabbed
+  %li= link_to 'General', statistics_path
+  %li= link_to 'Giving Tree', statistics_giving_tree_path
+  %li= link_to 'Pattern', statistics_pattern_path
+  %li.activetab= link_to 'Recycling', statistics_recycling_path
+
+%p
+  %strong Total Items Recycled:
+  = @stats[:items_recycled]
+
+%p
+  %strong Total Items Received from Recycling:
+  = @stats[:items_received_from_recycling]
+
+%table
+  %thead
+    %tr
+      %td{colspan: 2} Top 10 Recyclers
+  %tbody
+    - @top_recyclers.each do |top_recycler|
+      %tr
+        %td= link_to top_recycler.display_name, user_path(top_recycler.id)
+        %td= top_recycler.user_statistic.items_recycled

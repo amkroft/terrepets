@@ -1,0 +1,16 @@
+<% content_for :title, 'Terrepets > Users' %>
+<h3>
+  Users -
+  <%= User.count %>
+  total
+</h3>
+
+ <ul class='tabbed'>
+  <li class='activetab'><%= link_to 'All Users', users_path %></li>
+  <% if current_user.is_admin %>
+    <li><%= link_to 'Recently Active', users_active_path %></li>
+  <% end %>
+  <li><%= link_to 'Online Users', users_online_path %></li>
+</ul>
+
+<%= render 'table' %>

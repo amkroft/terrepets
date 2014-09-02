@@ -1,0 +1,14 @@
+<h3>
+  <%= link_to User.find(@pet.user_id).display_name, user_path(@pet.user_id) %>
+  >
+  <%= link_to @pet.name, pet_path(@pet) %>
+  > Edit
+  <% if cannot? :manage, @pet %>
+    Profile
+  <% end %>
+</h3>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @pet %> |
+<%= link_to 'Back', pets_path %>

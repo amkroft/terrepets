@@ -1,0 +1,43 @@
+<h3>
+  <%= link_to 'Locations', locations_path(type: @location.category) %>
+  >
+  <%= @location.name %>
+</h3>
+
+<p>
+  <strong>Preposition & Article:</strong>
+  <%= @location.preposition %>
+  <%= @location.article %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @location.level %>
+</p>
+
+<p>
+  <strong>Prizes:</strong>
+  <%= @location.prizes %>
+</p>
+
+<p>
+  <strong>Pretty Prizes:</strong>
+  <%= @location.pretty_prizes.html_safe %>
+</p>
+
+<p>
+  <strong>Average Food Hours:</strong>
+  <%= @location.average_food_hours %>
+</p>
+
+<p>
+  <strong>Average Game Value:</strong>
+  <%= @location.average_game_value %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @location.category %>
+</p>
+
+<%= link_to 'Edit', edit_location_path(@location) %>

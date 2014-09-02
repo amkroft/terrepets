@@ -1,0 +1,42 @@
+<% content_for :title, "Terrepets > Grocery Store" %>
+<h3>
+  Services
+  >
+  Grocery Store
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'Giving Tree', giving_tree_path %></li>
+  <li class='activetab'><%= link_to 'Grocery Store', grocery_store_path %></li>
+  <li><%= link_to 'Pattern Shop', pattern_shop_path %></li>
+  <li><%= link_to 'Recycling', recycling_path %></li>
+</ul>
+
+<p>Are your pets hungry? You've come to the right place! Food here is available at all times for you to buy for your pets. Bought food goes to your <%=link_to 'Incoming', incoming_path%>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <td>Quantity</td>
+      <td></td>
+      <td>Item</td>
+      <td>Price</td>
+    </tr>
+  </thead>
+  <%= form_tag grocery_store_buy_path, method: :post do |f| %>
+    <tbody>
+      <% @item_templates.each do |item_template| %>
+        <tr>
+          <%= hidden_field_tag('template_ids[]', item_template.id) %>
+          <td><%= number_field_tag 'quantities[]', 0, min: 0, size: 5 %></td>
+          <td><%= item_encyclopedia_link(item_template.name) %></td>
+          <td><%= item_template.name %></td>
+          <td><%= (item_template.value * 1.2).to_i %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr><td><%= submit_tag 'Purchase' %></td></tr>
+    </tfoot>
+  <% end %>
+</table>

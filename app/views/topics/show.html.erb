@@ -1,0 +1,44 @@
+<h3>
+  Plaza
+  >
+  <%= link_to 'Forums', forums_path %>
+  >
+  <%= link_to @forum.name, forum_path(@forum) %>
+  >
+  <%= @topic.name %>
+</h3>
+
+<ul class='tabbed'>
+  <li class='activetab'><%= link_to 'Forums', forums_path %></li>
+  <li><%= link_to 'IRC', forums_irc_path %></li>
+  <li><%= link_to 'Stars Given', forums_stars_given_path %></li>
+  <li><%= link_to 'Stars Received', forums_stars_received_path %></li>
+</ul>
+
+<% if can? :create, Post %>
+  <ul>
+    <li><%= link_to 'Reply', new_forum_topic_post_path(@topic.forum_id, @topic) %></li>
+  </ul>
+<% end %>
+
+<%= will_paginate @posts %>
+
+<% for post in @posts %>
+  <%= render partial: 'post', locals: { post: post } %>
+<% end %>
+
+<%= will_paginate @posts %>
+
+<% if can? :create, Post %>
+  <ul>
+    <li><%= link_to 'Reply', new_forum_topic_post_path(@topic.forum_id, @topic) %></li>
+  </ul>
+<% end %>
+
+<p class="bold">
+  <%= link_to 'Plaza Forums', forums_path %>
+  >
+  <%= link_to @forum.name, forum_path(@forum) %>
+  >
+  <%= @topic.name %>
+</p>

@@ -1,0 +1,56 @@
+<%= form_for(@user) do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :display_name %><br>
+    <%= f.text_field :display_name %>
+  </div>
+  <div class="field">
+    <%= f.label :money %><br>
+    <%= f.number_field :money, min: 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :savings %><br>
+    <%= f.number_field :savings, min: 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :favor %><br>
+    <%= f.number_field :favor, min: 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :is_admin %><br>
+    <%= f.check_box :is_admin %>
+  </div>
+  <div class="field">
+    <%= f.label :is_npc %><br>
+    <%= f.check_box :is_npc %>
+  </div>
+  <div class="field">
+    <%= f.label :avatar_id %><br>
+    <%= f.number_field :avatar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :avatar_type %><br>
+    <%= f.select :avatar_type, [['Standard','StandardAvatar'], ['Custom', 'CustomAvatar']] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile %><br>
+    <%= f.text_area :profile %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

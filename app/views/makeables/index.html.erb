@@ -1,0 +1,39 @@
+<h1>Listing makeables</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Lvl</th>
+      <th>Item</th>
+      <th>Ingredients</th>
+      <th>#</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @makeables.each do |makeable| %>
+      <tr>
+        <td><%= makeable.difficulty %></td>
+        <td>
+          <% if makeable.item_template %>
+            <%= makeable.item_template.name %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+        <td><%= pretty_ingredients(makeable.ingredients).html_safe %></td>
+        <td><%= makeable.quantity %></td>
+        <td><%= link_to raw("<i class='fa fa-search fa-lg' alt='Show' title='Show'></i>"), makeable %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_makeable_path(makeable) %></td>
+        <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), makeable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Makeable', new_makeable_path %>

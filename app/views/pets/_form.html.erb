@@ -1,0 +1,47 @@
+<%= form_for(@pet) do |f| %>
+  <% if @pet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pet.errors.count, "error") %> prohibited this pet from being saved:</h2>
+
+      <ul>
+      <% @pet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if can? :manage, @pet %>
+    <div class="field">
+      <%= f.label :user_id %><br>
+      <%= f.number_field :user_id %>
+    </div> 
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :gender %><br>    
+      <%= f.select :gender, options_for_select(Pet.genders.collect { |s| [s[0].humanize, s[0]] }, selected: @pet.gender), {} , class: "form-control" %>
+    </div>
+    <div class="field">
+      <%= f.label :pet_template_type %><br>
+      <%= f.select :pet_template_type, [['Standard','StandardPetTemplate'], ['Custom', 'CustomPetTemplate']] %>
+    </div>
+    <div class="field">
+      <%= f.label 'Pet Template ID' %><br>
+      <%= f.number_field :pet_template_id %>
+    </div> 
+  <% end %>
+
+  <% if can? :profile, @pet %>
+    <div class="field">
+      <%= f.label :profile %><br>
+      <%= f.text_area :profile %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

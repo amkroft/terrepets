@@ -1,0 +1,8 @@
+<h3>
+  <%= link_to 'Locations', locations_path(type: @location.category) %>
+  >
+  <%= link_to @location.name, location_path(@location) %>
+  > Edit
+</h3>
+
+<%= render 'form' %>

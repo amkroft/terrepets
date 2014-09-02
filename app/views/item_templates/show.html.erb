@@ -1,0 +1,123 @@
+<h3>
+  <!-- <%= link_to 'Item Encyclopedia', item_templates_path %> -->
+  Item Encyclopedia
+  >
+  <%= @item_template.name %>
+</h3>
+
+<ul>
+  <li><%= link_to 'Wiki Page', "http://wiki.terrepets.com/index.php?title=#{@item_template.name}", target: :_blank %></li>
+</ul>
+
+<p>
+  <%= @item_template.name %><br>
+  <%= @item_template.category %><br>
+  <em>
+    <% count = Item.where(item_template_id: @item_template.id).count %>
+    <%= count %>
+    <%= count == 1 ? 'exists' : 'exist' %>
+    in the game.
+  </em>
+</p>
+
+<% if @item_template.description && !@item_template.description.empty? %>
+  <hr>
+    <p><%= @item_template.description.html_safe %></p>
+  <hr>
+<% end %>
+
+<% if !Makeable.find_by(item_template_id: @item_template.id).nil? %>
+  <ul>
+    <li>
+      Can be Recycled.
+    </li>
+  </ul>
+<% end %>
+
+<table>
+  <tbody>
+    <tr>
+      <td><b>Gamesell Value<b></td>
+      <td><%= @item_template.value %></td>
+    </tr>
+    <tr>
+      <td><b>Lowest Flea Market Offer<b></td>
+      <td>
+        <% lowest = Item.where("item_template_id = ? AND location = 1 AND price > 0", @item_template.id).order("price ASC").first %>
+        <% if lowest %>
+          <%= link_to "#{lowest.price} m", stores_path(lowest.user_id) %>
+        <% else %>
+          none
+        <% end %>
+      </td>
+    </tr>
+    <% if @item_template.is_equipment %>
+      <tr>
+          <td><b>Durability</b></td>
+          <td><%= durability_text(@item_template.durability) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @item_template.is_equipment %>
+  <hr>
+  <h4>Equipment Information</h4>
+
+  <ul>
+    <% Pet.skills.each do |skill| %>
+      <% skill_bonus = @item_template.send("equip_#{skill}") %>
+      <% if skill_bonus != 0 %>
+        <li><%= equipment_bonus_text(skill_bonus, skill).html_safe %></li>
+      <% end %>
+    <% end %>
+    <% Pet.minor_skills.each do |stat| %>
+      <% stat_bonus = @item_template.send("equip_#{stat}") %>
+      <% if stat_bonus != 0 %>
+        <li><%= equipment_bonus_text(stat_bonus, stat).html_safe %></li>
+      <% end %>
+    <% end %>
+  </ul>
+
+<% end %>
+
+<% if @item_template.edible %>
+  <hr>
+
+  <h4>Meal Information</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Pet</td>
+        <td>Meal Size</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.pets.each do |pet| %>
+        <tr>
+          <td><%= pet.name %></td>
+          <td><%= meal_size(@item_template, pet) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if can? :manage, :item_templates %>
+  <hr>
+
+  <h4>Admin Information</h4>
+  <table>
+    <tbody>
+      <% if @item_template.recyclable? %>
+        <tr>
+          <td><b>Recycle Ingredients</b></td>
+          <td><%= pretty_ingredients(@item_template.recycle_ingredients).html_safe %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Edit', edit_item_template_path(@item_template) %> |
+  <%= link_to 'Back', item_templates_path %>
+<% end %>

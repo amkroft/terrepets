@@ -1,0 +1,17 @@
+%table{id: 'items'}
+  %thead
+    %tr
+      %td
+        %input{type: "checkbox", onclick: "checkAll(this)"}
+      %td
+      %td #
+      %td
+      %td Item Name
+  %tbody
+    - @items.each do |item_name, quantity|
+      %tr
+        %td= check_box_tag 'item_names[]', item_name
+        %td= item_encyclopedia_link(item_name)
+        %td= quantity
+        %td= image_tag ItemTemplate.image(item_name), class: :item_image
+        %td= item_name

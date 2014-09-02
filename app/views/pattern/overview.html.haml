@@ -1,0 +1,39 @@
+- content_for :title, "Terrepets > The Pattern"
+%h3
+  = link_to 'The Pattern', pattern_path
+  > Overview
+
+%ul.tabbed
+  %li= link_to 'Navigate', pattern_path
+  %li.activetab= link_to 'Overview', pattern_overview_path
+
+- if @pattern_tiles
+  %p
+    After surveying the nearby maze, the hawk returns to you with an overview...
+  %div#pattern_tiles
+    - (current_user.pattern_user.y+15).downto(current_user.pattern_user.y-15).each do |y|
+      - ((current_user.pattern_user.x-15)..(current_user.pattern_user.x+15)).each do |x|
+        - key = "#{x}-#{y}".to_sym
+        %div.overview_tile{id: key}
+          - if key == "#{current_user.pattern_user.x}-#{current_user.pattern_user.y}".to_sym
+            X
+          - elsif @pattern_tiles.has_key? key
+            = @pattern_tiles[key].simple_tile
+          - else
+            *
+      %br
+  %p
+    The hawk, having completed its task, flies away to rest until the next day.
+- elsif (Time.now - current_user.pattern_user.last_overview_look) < 24.hours
+  %p
+    You look skywards. The Sun glares bright overhead and a few clouds roll slowly across the sky, but you see nothing else.
+  %p.em
+    (You have gotten an overview of the Pattern in the last 24 hours.  You will need to wait
+    = distance_of_time_in_words(current_user.pattern_user.last_overview_look + 24.hours, Time.now)
+    before you can get another overview.)
+- else
+  %p
+    You look up towards the sky and see a hawk high above you.  The hawk could provide you with an overview of the maze! Do you want to whistle for it?
+  %p.em
+    (The hawk will be tired after surveying the area nearby you and will need to rest for 24 hours before being called again, so think well before calling the hawk...)
+  = button_to 'Whistle for the Hawk', pattern_view_overview_path, confirm: "Are you sure you want to whistle for the hawk?"

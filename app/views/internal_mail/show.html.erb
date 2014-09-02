@@ -1,0 +1,30 @@
+<h3> Welcome to TerrePets Mail </h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'Inbox', internal_mail_index_path %></li>
+  <li><%= link_to 'Send Mail', new_internal_mail_path %></li> 
+</ul>
+
+
+<table>
+  <tbody>
+    <tr>
+      <td>From:</td>
+      <td><%= @internal_mail.from_user_name %></td>
+    </tr>
+    <tr>
+      <td>Subject:</td>
+      <td><%= @internal_mail.subject %></td>
+    </tr>
+    <tr>
+      <td>Received:</td>
+      <td><%= @internal_mail.created_at.strftime('%F %r') %></td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <%= raw(@internal_mail.content) %>
+</p>
+
+<%= link_to 'Back', internal_mail_index_path %>
+| <%= link_to 'Reply', new_internal_mail_path(reply_to: @internal_mail.id) %>

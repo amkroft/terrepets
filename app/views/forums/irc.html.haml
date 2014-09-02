@@ -1,0 +1,12 @@
+- content_for :title, 'TerrePets > Plaza > IRC'
+%h3 
+  = link_to 'Plaza', forums_path
+  > IRC
+
+%ul.tabbed
+  %li= link_to 'Forums', forums_path
+  %li.activetab= link_to 'IRC', forums_irc_path
+  %li= link_to 'Stars Given', forums_stars_given_path
+  %li= link_to 'Stars Received', forums_stars_received_path
+
+%iframe{width: "100%", height: "500", scrolling: "no", src: "https://widget.mibbit.com/?settings=e81235c51dec7ab607b4cad9e75b49f5&server=mibbit.irchighway.net&channel=%23terrepets"}

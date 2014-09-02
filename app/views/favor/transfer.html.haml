@@ -1,0 +1,29 @@
+- content_for :title, "Terrepets > Transfer Favor"
+
+%h3 
+  = link_to 'Favor', favor_path
+  \> Transfer
+
+%ul.tabbed
+  %li= link_to 'Purchase', favor_path
+  %li= link_to 'Tickets', favor_tickets_path
+  %li= link_to 'History', favor_history_path
+  %li= link_to 'Regraphic Pet', favor_regraphic_pet_path
+  %li= link_to 'Custom Pet Graphic', favor_custom_pet_path
+  %li.activetab= link_to 'Transfer Favor', favor_transfer_path
+
+%p Transfer Favor directly to another user's account.
+
+= form_tag favor_transfer_path do
+  %table
+    %tbody
+      %tr
+        %td.bold Amount
+        %td= number_field_tag :amount, nil, min: 1
+      %tr
+        %td.bold User
+        %td= text_field_tag :user, nil
+      %tr
+        %td.bold Anonymous
+        %td= check_box_tag :anonymous
+  = submit_tag 'Transfer'

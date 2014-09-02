@@ -1,0 +1,56 @@
+<% content_for :title, "Terrepets > Recycling" %>
+<h3>
+  Services
+  >
+  Recycling
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'Giving Tree', giving_tree_path %></li>
+  <li><%= link_to 'Grocery Store', grocery_store_path %></li>
+  <li><%= link_to 'Pattern Shop', pattern_shop_path %></li>
+  <li class='activetab'><%= link_to 'Recycling', recycling_path %></li>
+</ul>
+
+<p>Recycle items into their base components!  Resulting components appear in your <%= link_to 'Incoming', incoming_path %>.</p>
+
+<%= form_tag items_action_path, method: :post do |j| %>
+  <table>
+
+    <thead>
+      <tr>
+        <td><input type="checkbox" onclick="checkAll(this)"></td>
+        <td></td>
+        <td>Item</td>
+        <td>Notes</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <%= fields_for "items[]", item do |f| %>
+          <tr>
+            <td><%= check_box_tag "items[]", item.id %></td>
+            <!-- <td><%= image_tag(item.item_template.image) %></td> -->
+            <td><%= item_encyclopedia_link(item.item_template.name) %></td>
+            <td><%= item.item_template.name %></td>
+            <td>
+              <%= item.origin_note %>
+              <% if item.user_note && item.origin_note %>
+                <br>
+              <% end %>
+              <%= item.user_note %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan='3'><%= submit_tag 'Recycle' %></td>
+      </tr>
+    </tfoot>
+
+  </table>
+<% end %>

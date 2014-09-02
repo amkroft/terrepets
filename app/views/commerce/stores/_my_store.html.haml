@@ -1,0 +1,19 @@
+%p
+  You have
+  = pluralize(@selling_items_total_count,'item')
+  for sale at a total cost of
+  = @selling_items_total_cost
+  monies.
+
+= form_tag stores_action_path, method: :post do |j|
+  %div{style: 'height: 30px;'}
+    %div#toolbar
+      = submit_tag 'Update'
+      = submit_tag "Gamesell", data: { confirm: 'Are you sure you want to gamesell these items?' }
+      = submit_tag 'Move'
+      = select_tag(:location, options_for_select([['My House', 0]]))
+      = submit_tag 'Prepare'
+  - if params[:condensed] == 'true'
+    = render partial: 'my_store_condensed'
+  - else
+    = render partial: 'my_store_detailed'

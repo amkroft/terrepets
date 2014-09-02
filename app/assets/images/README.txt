@@ -1,0 +1,1 @@
+All images have been REDACTED.  They are NOT public domain.

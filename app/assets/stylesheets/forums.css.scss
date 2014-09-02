@@ -1,0 +1,86 @@
+// Place all the styles related to the forums controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.forumtb {
+  table tr th {background:#4e6612; color:#fff; padding:4px; border:#111 solid 1px; font-weight: normal;}  
+  table tr td {border:1px #ccc solid; padding:5px;}  
+  table tr td.rightright {background: #eee;}  
+  table tr td h4 {margin:0; padding:0; font-weight:normal;}
+}
+
+table.forumtb {
+  border-collapse: initial;
+  border-spacing: 0;
+  border-radius: 4px;
+  border: 2px solid #4e6612;
+}
+
+.plazadivider {
+  border-spacing: 2;
+}
+
+.plazapost {
+  border-radius: 4px;
+  border: 2px solid #8f4306;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #c9bc99; 
+}
+
+.plazapost-titlebar {
+  color: #fff;
+  background-color: #8f4306;
+  position: relative;
+  height: 24px;
+}
+
+.plazapost-decoration {
+  padding-left: 10px;
+}
+
+.star {
+  color: #FFFF00;
+}
+
+.plazapost-title {
+  position: absolute;
+}
+
+.plazapost-mainbox {
+  position: relative;
+}
+
+.plazapost-resident {
+  position: absolute;
+  width: 95px;
+  padding: 5px 0;
+  overflow: hidden;
+  vertical-align: top;
+  text-align: center;
+}
+
+.plazapost-resident img {
+  max-height: 48px;
+  max-width: 48px;
+}
+
+.plazapost-contentbox {
+  margin-left: 100px;
+}
+
+.plazapost-content {
+  padding: 5px;
+  min-height: 70px;
+  max-height: 500px;
+  overflow: auto;
+  vertical-align: top;
+  background-color: white;
+}
+
+.plazapost-footer {
+  padding: 4px;
+  border-top: 1px solid #c9bc99;
+  clear: both;
+  background-color: white;
+}

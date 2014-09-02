@@ -1,0 +1,52 @@
+<% content_for :title, "Terrepets > Giving Tree" %>
+<h3>
+  Services
+  >
+  Giving Tree
+</h3>
+
+<ul class='tabbed'>
+  <li class='activetab'><%= link_to 'Giving Tree', giving_tree_path %></li>
+  <li><%= link_to 'Grocery Store', grocery_store_path %></li>
+  <li><%= link_to 'Pattern Shop', pattern_shop_path %></li>
+  <li><%= link_to 'Recycling', recycling_path %></li>
+</ul>
+
+
+<%= form_tag items_action_path, method: :post do |j| %>
+  <table>
+
+    <thead>
+      <tr>
+        <td><input type="checkbox" onclick="checkAll(this)"></td>
+        <td></td>
+        <td>Item</td>
+        <td>Notes</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= check_box_tag "items[]", item.id %></td>
+          <!-- <td><%= image_tag(item.item_template.image) %></td> -->
+          <td><%= item_encyclopedia_link(item.item_template.name) %></td>
+          <td><%= item.item_template.name %></td>
+          <td>
+            <%= item.origin_note %>
+            <% if item.user_note && item.origin_note %>
+              <br>
+            <% end %>
+            <%= item.user_note %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+
+  <%= submit_tag 'Give Gifts' %>
+  <%= check_box_tag 'add_name' %>
+  Add my name to the comments
+  
+<% end %>

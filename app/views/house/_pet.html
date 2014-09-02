@@ -1,0 +1,67 @@
+<li>
+  <div class='petdivleft'>
+    <% if pet.item %>
+      <div class='petequip centered' title=<%= pet.item.durability_text %> <%= pet.item.worn ? 
+      "style=background-color:#fca;" : nil %> >
+        <%= pet.item.item_template.name %>
+      </div>
+    <% else %>
+      <div class='petequip'></div>
+    <% end %>
+    <!-- <div class='petkey centered'> -->
+      <!-- Put image/link of pet key here -->
+    <!-- </div> -->
+    <div class='petactivity'>
+      <% if pet.can_reincarnate? %>
+        <%= link_to image_tag('yinyang.png'), pet_reincarnation_path(pet), title: 'This pet has reached master status.'%>
+      <% end %>
+      <!-- <%= link_to 'Logs', pet_hour_logs_path(pet) %> -->
+      <%= link_to image_tag('notepad.png'), pet_hour_logs_path(pet), title: 'Hourly logs' %>
+    </div>
+  </div>
+  <div class='petdivcenter'>
+    <div class='petimage'>
+      <% if pet.pet_template %>
+        <%= link_to image_tag(pet.pet_template.image), pet_path(pet) %>
+      <% else %>
+        <%= image_tag 'pets/none.png' %>
+      <% end %>
+    </div>
+    <div class='centered'>
+      <div class='petlevel'>
+        <%= "Level #{pet.level}" %>
+      </div>
+      <br>
+      <div class='clear'></div>
+      <div class='petaffection'>
+        <!-- Pet affection bar here -->
+      </div>
+    </div>
+  </div>
+  <div class='petdivright'>
+    <span class='petgender'>
+      <% if pet.male? %>
+        ♂
+      <% else %>
+        ♀
+      <% end %>
+    </span>
+    <b><%= pet.name %></b>
+    <br>
+    <% if pet.sleeping %>
+      is sleeping
+    <% else %>
+      <%= pet.energy_note.html_safe %>
+      <br>
+      <%= pet.food_note.html_safe %>
+      <br>
+      <%= pet.safety_note.html_safe %>
+      <br>
+      <%= pet.love_note.html_safe %>
+      <br>
+      <%= pet.esteem_note.html_safe %>
+    <% end %>
+  </div>
+  <div class='clear'></div>
+  <!-- Put actions on pet here -->
+</li>

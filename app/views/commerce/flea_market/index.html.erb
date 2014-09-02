@@ -1,0 +1,31 @@
+<% content_for :title, "Terrepets > Flea Market" %>
+<h3>
+  Commerce
+  >
+  Flea Market
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'Trading Post', trading_post_path %></li>
+  <li class='activetab'><%= link_to 'Flea Market', flea_market_path %></li>
+  <li><%= link_to 'Stores', stores_path %></li>
+  <li><%= link_to 'Store Logs', store_logs_path %></li>
+</ul>
+
+<h4>Item Search</h4>
+
+<%= form_tag search_flea_market_path do |f| %>
+  <p>
+    <%= label_tag :item %>
+    <%= text_field_tag :query %>
+  </p>
+  <%= submit_tag "Search" %>
+<% end %>
+
+<h4>Open User Stores</h4>
+
+<ul>
+  <% @users.each do |user| %>
+    <li><%= link_to user.display_name, stores_path(user.id) %></li>
+  <% end %>
+</ul>

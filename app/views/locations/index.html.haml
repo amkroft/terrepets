@@ -1,0 +1,35 @@
+%h3 Locations
+
+%ul.tabbed
+  %li{class: ('activetab' if @type.eql? 'all')}= link_to 'All', locations_path
+  %li{class: ('activetab' if @type.eql? 'fishing')}= link_to 'Fishing', locations_path(type: :fishing)
+  %li{class: ('activetab' if @type.eql? 'gathering')}= link_to 'Gathering', locations_path(type: :gathering)
+  %li{class: ('activetab' if @type.eql? 'lumberjacking')}= link_to 'Lumberjacking', locations_path(type: :lumberjacking)
+  %li{class: ('activetab' if @type.eql? 'mining')}= link_to 'Mining', locations_path(type: :mining)
+  %li{class: ('activetab' if @type.eql? 'thieving')}= link_to 'Thieving', locations_path(type: :thieving)
+
+%table{width: '100%'}
+  %thead
+    %tr
+      %th Name
+      %th{width: '20px'} Lvl
+      %th Prizes
+      %th{width: '40px'} F.Hrs
+      %th{width: '40px'} GV
+      %th{width: '100px'} Category
+      %th{width: '16px'}
+      %th{width: '16px'}
+  %tbody
+    - @locations.each do |location|
+      %tr
+        %td= link_to location.name, location
+        %td= location.level
+        %td= location.pretty_prizes.html_safe
+        %td= location.average_food_hours
+        %td= location.average_game_value
+        %td= location.category
+        %td= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_location_path(location)
+        %td= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), location, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+= link_to 'New Location', new_location_path

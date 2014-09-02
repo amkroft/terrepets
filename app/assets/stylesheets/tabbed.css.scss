@@ -1,0 +1,44 @@
+/* Tab Menu */
+
+$lightgreen: rgb(232, 240, 201);
+$limegreen: rgb(195, 204, 110);
+$mediumgreen: rgb(78, 102, 18);
+$darkgreen: rgb(46, 56, 15);
+
+ul.tabbed {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1em 0;
+
+  padding-bottom: 1px;
+  border-bottom: 1px solid $darkgreen;
+}
+
+ul.tabbed li {
+  display: inline;
+  margin: 0 0 0 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding-bottom: 1px;
+
+  background-color: $lightgreen;
+  border-top: 1px solid #aca;
+  border-left: 1px solid #aca;
+  border-right: 1px solid #aca;
+  border-bottom: 1px solid transparent;
+}
+
+ul.tabbed li.activetab {
+  padding-bottom: 2px;
+
+  border-top: 1px solid $darkgreen;
+  border-left: 1px solid $darkgreen;
+  border-right: 1px solid $darkgreen;
+  background-color: white;
+  font-weight: bold;
+  border-bottom: 1px solid white;
+}
+
+ul.tabbed li a {
+  padding: 2px 6px;
+}

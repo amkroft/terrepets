@@ -1,0 +1,21 @@
+%table#items
+  %thead
+    %tr
+      %td
+        %input{type: "checkbox", onclick: "checkAll(this)"}
+      %td
+      %td Item
+      %td #
+      %td GV
+      %td Max Price
+  %tbody
+    - @items.each do |item_template_name, data|
+      = fields_for "price_items[]", item_template_name do |f|
+        %tr
+          %td= check_box_tag "item_names[]", item_template_name
+          / %td= image_tag(item.item_template.image)
+          %td= item_encyclopedia_link(item_template_name)
+          %td= item_template_name
+          %td= data[:quantity]
+          %td= data[:value]
+          %td= number_field_tag :price, data[:highest_price], id: "item_#{item_template_name}_price"

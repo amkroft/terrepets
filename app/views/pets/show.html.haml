@@ -1,0 +1,79 @@
+%table
+  %tbody
+    %tr
+      %td= image_tag @pet.pet_template.image
+      %td
+        %h3
+          = link_to User.find(@pet.user_id).display_name, user_path(@pet.user_id)
+          >
+          = @pet.name
+        - @pet.pet_badge.badges.each do |badge|
+          = image_tag "#{badge}.png", style: 'width: 20px;', title: ActiveSupport::Inflector.titleize(badge)
+
+- if current_user && @pet.user_id == current_user.id
+  %ul.tabbed
+    %li.activetab= link_to 'Profile', pet_path(@pet)
+    %li= link_to 'Equip', equip_pet_path(@pet)
+    %li= link_to 'Hour Logs', pet_hour_logs_path(@pet)
+    - if @pet.can_reincarnate?
+      %li= link_to 'Reincarnate', pet_reincarnation_path(@pet)
+- else
+  %hr
+
+- if @pet.profile && !@pet.profile.chomp.empty?
+  = clean_post_content(@pet.profile).html_safe
+  %hr
+
+%p
+  Gender: #{@pet.gender.humanize}
+  %br
+  Birthdate: #{@pet.birthday.strftime("%b %-d, %Y")}
+  %br
+  Level: #{@pet.level}
+  - if !@pet.masteries.empty?
+    %br
+    Masteries: #{@pet.masteries}
+
+- if @pet.pet_reincarnations.any?
+  = image_tag('yinyang.png')
+  Has been reincarnated
+  = pluralize(@pet.pet_reincarnations.size, 'time') + '.'
+  %ul{style: 'list-style:none; padding-left:15px; margin-top: 4px; margin-bottom: 4px'}
+    - @pet.pet_reincarnations.each do |reincarnation|
+      %li
+        = image_tag(reincarnation.graphic, width: '24px')
+        = reincarnation.born_on.strftime('%Y.%m.%d')
+        \-
+        = reincarnation.reincarnated_on.strftime('%Y.%m.%d')
+        ; ascended as a
+        = "level-#{reincarnation.level}"
+        master
+        = reincarnation.pretty_masteries
+
+
+- if can? :manage, @pet
+  %h3 Major Skills
+  %ul
+    - Pet.skills.each do |skill|
+      %li
+        = skill.to_s
+        \: #{@pet.send(skill)} + #{@pet.send("#{skill}_training")}/#{@pet.level_stat_exp(@pet.send(skill))}
+  %h3 Minor Stats
+  %ul
+    - Pet.minor_skills.each do |skill|
+      %li
+        = skill.to_s
+        \: #{@pet.send(skill)} + #{@pet.send("#{skill}_training")}/#{@pet.level_stat_exp(@pet.send(skill))}
+  %h3 Status
+  %ul
+    %li
+      Sleeping: #{@pet.sleeping ? 'Yes' : 'No'}
+    %li
+      Energy: #{@pet.energy} / #{@pet.max_energy}
+    %li
+      Food: #{@pet.food} / #{@pet.max_food}
+  %p
+    = link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_pet_path(@pet)
+- elsif can? :profile, @pet
+  %p
+    = link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i> Edit Profile"), edit_pet_path(@pet)

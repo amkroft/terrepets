@@ -1,0 +1,49 @@
+<h3>
+  Items -
+  <%= Item.count %>
+  total
+</h3>
+
+<%= will_paginate @items %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item Template</th>
+      <th>Item Name</th>
+      <th>User</th>
+      <th>Location</th>
+      <th>Price</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.item_template_id %></td>
+        <td>
+	  <% if item.item_template %>
+	    <%= item.item_template.name %>
+	  <% else %>
+	    N/A
+	  <% end %>
+	</td>
+        <td><%= item.user_id %></td>
+        <td><%= item.location %></td>
+        <td><%= item.price %></td>
+        <td><%= link_to raw("<i class='fa fa-search fa-lg' alt='Show' title='Show'></i>"), item %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_item_path(item) %></td>
+        <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @posts %>
+
+<br>
+
+<%= link_to 'New Item', new_item_path %>

@@ -1,0 +1,66 @@
+<h3>
+  <%= current_user.display_name %>'s Incoming
+</h3>
+
+<script>
+  // function checkAll(box) {
+  //   if (box.checked) {
+  //     $(':checkbox').each(function() {
+  //       this.checked = true;                        
+  //     });
+  //   } else {
+  //     $(':checkbox').each(function() {
+  //       this.checked = false;                        
+  //     });
+  //   } 
+  // }
+</script>
+
+<% if @items.any? %>
+  <%= form_tag items_action_path, method: :post do |f| %>
+    <div style="height: 35px;">
+      <table id='toolbar'>
+        <tr>
+          <td>
+            <%= submit_tag 'Move' %>
+            <%= select_tag(:location, options_for_select([['My House', 0],['My Store', 1]])) %>
+          </td>
+          <td><%= submit_tag "Gamesell", data: { confirm: 'Are you sure you want to gamesell these items?' } %></td>
+        </tr>
+      </table>
+    </div>
+    <table id='items'>
+      
+      <thead>
+        <tr>
+          <td><input type="checkbox" onclick="checkAll(this)"></td>
+          <td></td>
+          <td>Name</td>
+          <td>GV</td>
+          <td>Notes</td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @items.each do |item| %>
+          <tr>
+            <td><%= check_box_tag 'items[]', item.id %></td>
+            <td><%= item_encyclopedia_link(item.item_template.name) %></td>
+            <td><%= item.item_template.name %></td>
+            <td><%= item.item_template.value %></td>
+            <td>
+              <%= item.origin_note %>
+              <% if item.user_note && item.origin_note %>
+                <br>
+              <% end %>
+              <%= item.user_note %>
+            </td>
+          </tr> 
+        <% end %>
+      </tbody>
+
+    </table>
+  <% end %>
+<% else %>
+  You have no incoming items.
+<% end %>

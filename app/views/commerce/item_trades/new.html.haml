@@ -1,0 +1,44 @@
+- content_for :title, 'Terrepets > Trading Post'
+%h3
+  Commerce
+  \>
+  =link_to 'Trading Post', trading_post_path
+  \>
+  New Trade
+
+%ul.tabbed
+  %li.activetab= link_to 'Trading Post', trading_post_path
+  %li= link_to 'Flea Market', flea_market_path
+  %li= link_to 'Stores', stores_path
+  %li= link_to 'Store Logs', store_logs_path
+
+= form_for(@item_trade, :url => create_trade_path, :html => { method: :post }) do |f|
+  - if @item_trade.errors.any?
+    %div#error_explanation
+      %h2
+        = pluralize(@custom_pet_template.errors.count, 'error')
+        prohibited this custom_pet_template from being saved:
+      %ul
+        - @custom_pet_template.errors.full_messages.each do |msg|
+          %li= msg
+  %table
+    %tbody
+      %tr
+        %td= f.label :trade_with
+        %td= text_field_tag :trade_with, @item_trade.recipient ? @item_trade.recipient.display_name : nil
+      %tr
+        %td= f.label :anonymous
+        %td= f.check_box :anonymous
+      %tr
+        %td= f.label :gift
+        %td= f.check_box :gift
+      %tr
+        %td= f.label :message
+        %td= f.text_field :message
+      %tr
+        %td= f.label :money
+        %td= f.number_field :money_1
+
+  = f.submit 'Start Trade'
+  = button_tag 'Show Items', id: :show_items
+  = render partial: 'trade_items'

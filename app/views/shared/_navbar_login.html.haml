@@ -1,0 +1,11 @@
+#login
+  = form_for :user, url: new_user_session_path do |f|
+    .field{:tabindex => '1'}
+      = f.label :username
+      = text_field_tag 'user[username]'
+    .field{:tabindex => '2'}
+      = f.label :password
+      = f.password_field :password    
+    .actions
+      = f.submit 'Log In' 
+  = link_to "Sign up", new_registration_path(:user)

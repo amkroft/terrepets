@@ -1,0 +1,27 @@
+%table#items
+  %thead
+    %tr
+      %td
+        %input{type: "checkbox", onclick: "checkAll(this)"}
+      %td
+      %td Item
+      %td GV
+      %td Price
+      %td
+      %td Notes
+  %tbody
+    - @items.each do |item|
+      = fields_for "price_items[]", item do |f|
+        %tr
+          %td= check_box_tag "items[]", item.id
+          / %td= image_tag(item.item_template.image)
+          %td= item_encyclopedia_link(item.item_template.name)
+          %td= item.item_template.name
+          %td= item.item_template.value
+          %td= f.number_field :price, id: "item_#{item.item_template.id}_id_#{item.id}_price"
+          %td= link_to raw("<i class='fa fa-angle-double-right fa-lg'></i>"), nil, onclick: "copyprice(#{item.id}, #{item.item_template.id})", remote: true
+          %td
+            = item.origin_note
+            - if item.user_note && item.origin_note
+              %br
+            = item.user_note

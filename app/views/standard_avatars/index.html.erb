@@ -1,0 +1,32 @@
+<h3>
+  Standard Avatars
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Rights</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @standard_avatars.each do |standard_avatar| %>
+      <tr>
+        <td><%= link_to standard_avatar.name, standard_avatar %></td>
+        <td><%= image_tag standard_avatar.image %></td>
+        <td><%= standard_avatar.rights %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_standard_avatar_path(standard_avatar) %></td>
+        <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), standard_avatar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Standard avatar', new_standard_avatar_path %>

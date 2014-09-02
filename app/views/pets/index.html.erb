@@ -1,0 +1,54 @@
+<h3>
+  Pets - 
+  <%= Pet.count %>
+  total
+</h3>
+
+<%= will_paginate @pets %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Level</th>
+      <th>Birthday</th>
+      <th>Gender</th>
+      <th>Current Owner</th>
+      <th>Image</th>
+      <th></th>
+      <% if current_user.is_admin %>
+        <th></th>
+        <th></th>        
+      <% end %>
+    </tr>
+  </thead>
+
+
+  <tbody>
+      <% @pets.each do |pet| %>
+      <tr>
+        <td><%= link_to pet.name, pet_path(:id=>pet.id) %></td>        
+        <td><%= pet.level %></td>
+        <td><%= pet.birthday %></td>
+        <td><%= pet.gender.humanize %></td>
+        <td><%= User.find(pet.user_id).display_name %></td>
+        <% if pet.pet_template %>
+          <th><%= image_tag pet.pet_template.image %></td>
+        <% else %>
+          <th><%= image_tag "pets/none.png" %></td>
+        <% end %>
+        <td><%= link_to raw("<i class='fa fa-search fa-lg' alt='Show' title='Show'></i>"), pet %></td>
+        <% if current_user.is_admin %>
+          <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_pet_path(pet) %></td>
+          <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @pets %>
+
+<br>
+
+<%= link_to 'New Pet', new_pet_path %>

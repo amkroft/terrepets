@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  last_hour_run: 2013-12-08 11:35:31
+  current_bulk: 1
+  max_bulk: 1
+
+two:
+  user_id: 1
+  last_hour_run: 2013-12-08 11:35:31
+  current_bulk: 1
+  max_bulk: 1

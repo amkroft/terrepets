@@ -1,0 +1,32 @@
+- content_for :title, "TerrePets > Equip Pet"
+%h3
+  = link_to User.find(@pet.user_id).display_name, user_path(@pet.user_id)
+  >
+  = @pet.name
+  > Equip
+= image_tag @pet.pet_template.image
+
+%ul.tabbed
+  %li= link_to 'Profile', pet_path(@pet)
+  %li.activetab= link_to 'Equip', equip_pet_path(@pet)
+  %li= link_to 'Hour Logs', pet_hour_logs_path(@pet)
+  - if @pet.can_reincarnate?
+    %li= link_to 'Reincarnate', pet_reincarnation_path(@pet)
+
+- if @pet.item
+  %p= button_to "Unequip #{@pet.item.item_template.name}", unequip_pet_path(@pet)
+
+%table
+  %thead
+    %tr
+      %td
+      %td
+      %td Item
+      %td Health
+  %tbody
+    - @equipment.each do |equipable_item|
+      %tr
+        %td= button_to 'Equip', update_equip_pet_path(@pet, item: equipable_item)
+        %td= item_encyclopedia_link(equipable_item.item_template.name)
+        %td= equipable_item.item_template.name
+        %td= equipable_item.durability_text

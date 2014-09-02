@@ -1,0 +1,52 @@
+<% content_for :title, "Terrepets > Rename Pets " %>
+
+<h3>
+  <%= link_to 'Pet Shelter', pet_shelter_path %>
+  >
+  Rename Pets
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'Adopt a Pet', pet_shelter_path %></li>
+  <li><%= link_to 'Give Up a Pet', give_up_path %></li>
+  <li class='activetab'><%= link_to 'Rename Pets', rename_path %></li>
+</ul>
+
+<p>Rename any of your pets here.  Each rename costs 125 monies.</p>
+
+<% if @pets.any? %> <!--If the sheleter has any pets ownerd by the shelter user -->
+  <%= form_tag rename_pets_path, method: :post do |f| %>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @pets.each do |pet| %>
+          <%= fields_for "pets[]", pet do |f| %>
+            <tr>
+              <td><%= link_to image_tag(pet.pet_template.image), pet_path(pet) %></td>
+              <td>
+                <% if pet.male? %>
+                  ♂
+                <% else %>
+                  ♀
+                <% end %>
+              </td>
+              <td>
+                <!-- <%= pet.name %> -->
+                <%= f.text_field :name %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>   
+      </tbody>
+    </table>
+    <%= submit_tag "Rename" %>
+  <% end %>
+<% else %> <!--If not display not pets for adoption -->
+  <h4>You have no pets to rename.</h4>
+<% end %>

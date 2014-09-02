@@ -1,0 +1,30 @@
+<%= form_for [@forum, @topic] do |f| %>
+  <%= f.hidden_field :forum_id %>
+  <p>  
+    <%= f.label 'Title:' %>
+    <%= f.text_field :name %>  
+  </p>
+  <% if current_user.is_admin %>
+
+    <p>
+      <%= f.label 'Forum:' %>
+      <%= f.select :forum_id, options_for_select(Forum.all.collect { |forum| [forum.name, forum.id] }, selected: @topic.forum_id), {} , class: "form-control" %>
+    <p>
+      <%= f.label 'Icon:' %>
+      <%= f.text_field :icon %>
+    </p>
+    <p>
+      <%= f.label 'Stickied' %>
+      <%= f.check_box :stickied %>
+    </p>
+  <% end %>
+  <p>
+    <%= f.label 'Message:' %><br>
+    <%= hidden_field_tag 'post[id]', @post.id %>
+    <%= text_area_tag 'post[content]', @post.content, cols: "80", rows: "20" %>
+  </p>  
+  <div class='actions'>
+    <%= f.submit %>
+  </div>
+  
+<% end %> 

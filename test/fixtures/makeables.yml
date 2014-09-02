@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  difficulty: 1
+  item_template_id: 1
+  ingredients: MyString
+
+two:
+  difficulty: 1
+  item_template_id: 1
+  ingredients: MyString

@@ -1,0 +1,40 @@
+<h1>Listing Custom Avatars</h1>
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Uploader</th>
+      <th>Author</th>
+      <th>Rights</th>
+      <th></th>
+      <% if (current_user.is_admin ) %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+  <hr>
+
+  <tbody>
+    <% @custom_avatars.each do |custom_avatar| %>
+      <tr>
+        <td><%= custom_avatar.name %></td>
+        <td><%= image_tag custom_avatar.image %></td>
+        <td><%= User.find(custom_avatar.uploader).username %></td>
+        <td><%= custom_avatar.author %></td>
+        <td><%= custom_avatar.rights %></td>
+        <td><%= link_to raw("<i class='fa fa-search fa-lg' alt='Show' title='Show'></i>"), custom_avatar %></td>
+        <% if (current_user.is_admin ) %>
+          <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_custom_avatar_path(custom_avatar) %></td>
+          <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), custom_avatar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Custom avatar', new_custom_avatar_path %>

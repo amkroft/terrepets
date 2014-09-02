@@ -1,0 +1,41 @@
+- content_for :title, "Terrepets > Regraphic Pet"
+
+%h3 
+  =link_to 'Favor', favor_path
+  > Regraphic Pet
+
+%ul.tabbed
+  %li= link_to 'Purchase', favor_path
+  %li= link_to 'Tickets', favor_tickets_path
+  %li= link_to 'History', favor_history_path
+  %li.activetab= link_to 'Regraphic Pet', favor_regraphic_pet_path
+  %li= link_to 'Custom Pet Graphic', favor_custom_pet_path
+  %li= link_to 'Transfer Favor', favor_transfer_path
+
+%p Changing a pet to another common graphic costs 50 Favor. You can only change the graphic of pets that have a Standard pet graphic.
+
+= form_tag favor_regraphic_pet_path do |f|
+  %h4 Pet to Change
+  %table
+    %thead
+      %tr{style: 'text-align: center;'}
+        %td{colspan: 3} Pet
+    %tbody
+      - @pets.each do |pet|
+        %tr
+          %td= radio_button_tag 'pet', pet.id
+          %td= image_tag pet.pet_template.image
+          %td= pet.name
+
+
+  %h4 Choose New Graphic
+  - @pet_templates.each do |pet_template|
+    .pet_template_choice{style: 'display: inline-block'}
+      = image_tag pet_template.image
+      %br
+      %div{style: "padding-left: 15px;"}
+        = radio_button_tag 'pet_template', pet_template.id
+
+  %div{ style: "clear: left;"}
+
+  = submit_tag 'Regraphic Pet'

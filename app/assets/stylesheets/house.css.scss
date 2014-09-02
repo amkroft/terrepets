@@ -1,0 +1,103 @@
+// Place all the styles related to the House controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.petitemtile
+{
+  border-style:solid;
+  border-width:1px;
+  width:50px;
+  height:50px;
+  display: inline-block;
+}
+
+.endinventory {
+  clear: left;
+}
+
+.clear {
+  clear: both;
+}
+
+#items {
+  
+}
+
+.pets li {
+  width: 245px; // For when petdivleft is active
+  // width: 200px;
+  height: 140px;
+  margin-left: 0;
+  padding: 4px;
+  list-style: none;
+  display: block;
+  float: left;
+}
+
+// Left Pet div
+
+.petdivleft {
+  float: left;
+  width: 50px;
+}
+
+.petequip {
+  width: 50px;
+  height: 60px; // Might need ot change to 64px when items have images
+  padding-top: 2px;
+}
+
+.petkey {
+  width: 50px;
+  height: 32px;
+  padding-top: 2px;
+}
+
+.petactivity {
+  padding-top: 2px;
+  padding-right: 5px;
+  text-align: right;
+}
+
+// Center Pet div
+
+.petdivcenter {
+  float: left;
+  width: 60px;
+}
+
+.petimage {
+  height: 55px;
+  padding: 6px 0 0 6px;
+}
+
+.petimage img {
+  display: block;
+  margin: auto;
+}
+
+.petlevel {
+
+}
+
+.petaffection {
+  clear: both;
+  padding-top: 2px;
+}
+
+// Right Pet div
+
+.petdivright {
+  width: 120px;
+  height: 110px;
+  overflow: auto;
+  float: left;
+  padding-left: 14px;
+}
+
+.petgender {
+  position: relative;
+  left: -14px;
+  top: 2px;
+  margin-right: -12px;
+}

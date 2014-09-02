@@ -1,0 +1,47 @@
+- content_for :title, "Terrepets > Trading Post"
+%h3
+  Commerce
+  >
+  Trading Post
+
+%ul.tabbed
+  %li.activetab= link_to 'Trading Post', trading_post_path
+  %li= link_to 'Flea Market', flea_market_path
+  %li= link_to 'Stores', stores_path
+  %li= link_to 'Store Logs', store_logs_path
+
+%ul
+  %li= link_to 'Initiate a new trade', new_trade_path
+
+%table
+  %thead
+    %tr
+      %th Action
+      %th Resident
+      %th Sending
+      %th Receiving
+      %th Message
+  %tbody
+    - @item_trades.each do |item_trade|
+      %tr
+        %td
+          - if can? :accept, item_trade
+            = link_to 'Accept trade', accept_trade_path(item_trade)
+          - elsif can? :negotiate, item_trade
+            = link_to 'Negotiate trade', negotiate_trade_path(item_trade)
+          - else
+            Waiting for response
+          %br
+          = link_to 'Cancel trade', cancel_trade_path(item_trade)
+        %td
+          - if item_trade.anonymous_for(current_user)
+            %em anonymous
+          - else
+            - resident = User.find(item_trade.other_user(current_user.id))
+            = link_to resident.display_name, user_path(resident)
+        / - text = item_trade_text(current_user, item_trade)
+        / %td= text[:sending].html_safe
+        / %td= text[:receiving].html_safe
+        %td= item_trade.sending_description(current_user).html_safe
+        %td= item_trade.receiving_description(current_user).html_safe
+        %td= item_trade.message

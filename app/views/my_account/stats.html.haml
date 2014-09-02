@@ -1,0 +1,20 @@
+- content_for :title, "Terrepets > Account Stats"
+%h3
+  = link_to 'Account Settings', my_account_index_path
+  \> Stats
+
+%ul.tabbed
+  %li= link_to 'General', my_account_index_path
+  %li= link_to 'Avatar', my_account_avatar_path
+  %li.activetab= link_to 'Stats', my_account_stats_path
+  %li= link_to 'Profile', my_account_profile_path
+
+%p Here you can see stats about your user account.
+
+%table
+  %tbody
+    - sorted_keys = @stats.keys.sort
+    - sorted_keys.each do |key|
+      %tr
+        %td= key.to_s.titleize
+        %td= @stats[key]

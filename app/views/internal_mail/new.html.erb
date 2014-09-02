@@ -1,0 +1,9 @@
+<h3> Welcome to TerrePets Mail </h3>
+
+<ul class='tabbed'>
+	<li> <%= link_to 'Inbox', internal_mail_index_path %></li>
+	<li class='activetab'><%= link_to 'Send Mail', new_internal_mail_path %></li>	
+</ul>
+
+
+<%= render 'form' %>

@@ -1,0 +1,36 @@
+<%= form_for(@custom_avatar) do |f| %>
+  <% if @custom_avatar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@custom_avatar.errors.count, "error") %> prohibited this custom_avatar from being saved:</h2>
+
+      <ul>
+      <% @custom_avatar.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.file_field :uploaded_file, accept: 'image/png,image/gif,image/jpeg' %>
+  </div>
+  <div class="field">
+    <%= f.label :uploader %><br>
+    <%= f.number_field :uploader, min: 1 %>
+  </div>
+  <div class="field">
+    <%= f.label :author %><br>
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :rights %><br>
+    <%= f.text_area :rights %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

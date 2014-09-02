@@ -1,0 +1,59 @@
+- content_for :title, "Terrepets > Custom Pet Graphic"
+
+%h3 
+  =link_to 'Favor', favor_path
+  > Custom Pet Graphic
+
+%ul.tabbed
+  %li= link_to 'Purchase', favor_path
+  %li= link_to 'Tickets', favor_tickets_path
+  %li= link_to 'History', favor_history_path
+  %li= link_to 'Regraphic Pet', favor_regraphic_pet_path
+  %li.activetab= link_to 'Custom Pet Graphic', favor_custom_pet_path
+  %li= link_to 'Transfer Favor', favor_transfer_path
+
+%p Changing a pet to a custom graphic costs 500 Favor. You can only change the graphic of pets that have a Standard pet graphic.
+
+= form_tag favor_custom_pet_path, multipart: true do
+  %h4 Pet to Change
+  %table
+    %thead
+      %tr{style: 'text-align: center;'}
+        %td{colspan: 3} Pet
+    %tbody
+      - @pets.each do |pet|
+        %tr
+          %td= radio_button_tag 'pet_id', pet.id
+          %td= image_tag pet.pet_template.image
+          %td= pet.name
+
+
+  %h4 Choose New Graphic
+  %p Upon upload, you agree that you have the right to use the specified image and that you are giving TerrePets the right to use the image within the TerrePets site.
+  %div{style: 'height: 50px;'}
+    = image_tag '#', {id: 'upload_preview', alt: 'your image', hidden: true}
+  %br
+  = file_field_tag 'custom_image', {:class => 'file'}
+  %br
+  = label_tag 'Image Author:'
+  = text_field_tag 'author'
+  %br
+  %br
+  = submit_tag 'Regraphic Pet'
+
+:javascript
+  $(document).ready(function(){
+      var preview = $('img#upload_preview');
+
+      $(".file").change(function(event){
+        var input = $(event.currentTarget);
+        var file = input[0].files[0];
+        var reader = new FileReader();
+        reader.onload = function(e){
+           image_base64 = e.target.result;
+           preview.attr("src", image_base64);
+           preview.attr("hidden", false);
+        };
+        reader.readAsDataURL(file);
+      });
+  });

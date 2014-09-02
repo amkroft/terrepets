@@ -1,0 +1,50 @@
+<h3>
+  <%= link_to 'Pet Shelter', pet_shelter_path %>
+  >
+  Give Up A Pet
+</h3>
+
+<% content_for :title, "Terrepets > Pet Shelter > Give Up Pet " %>
+<ul class='tabbed'>
+	<li><%= link_to 'Adopt a Pet', pet_shelter_path %></li>
+	<li class='activetab'><%= link_to 'Give Up a Pet', give_up_path %></li>
+	<li><%= link_to 'Rename Pets', rename_path %></li>
+</ul>
+
+<% if @pets.any? %> <!--If the sheleter has any pets ownerd by the shelter user -->
+	<%= form_tag give_up_pets_path, method: :post do |f| %>
+		<table>
+			<thead>
+				<tr>
+				<th></td>
+				<th>Image</th>
+				<th>Lvl</th>
+				<th>Name</th>
+				<th>Birthday</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <% @pets.each do |pet| %>
+					<tr>
+					  <td><%= check_box_tag 'pets[]', pet.id %></td>
+					  <td><%= link_to image_tag(pet.pet_template.image), pet_path(pet) %></td>
+					  <td><%= pet.level %></td>
+					  <td>
+					  	<% if pet.male? %>
+        				♂
+      				<% else %>
+        				♀
+      				<% end %>
+					 		<%= pet.name %>
+					 	</td>
+					  <td><%= pet.birthday.strftime("%b %-d, %Y") %></td>
+					</tr>
+			  <% end %>	  
+			</tbody>
+		</table>
+		<hr>
+		<%= submit_tag "Give Up Pet" %>
+	<% end %>
+<% else %> <!--If not display not pets for adoption -->
+	<h4>No pets avilable for adoption</h4>
+<% end %>

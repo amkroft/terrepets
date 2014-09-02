@@ -1,0 +1,35 @@
+- content_for :title, "Terrepets > Favor History"
+
+%h3 
+  =link_to 'Favor', favor_path
+  > History
+
+%ul.tabbed
+  %li= link_to 'Purchase', favor_path
+  %li= link_to 'Tickets', favor_tickets_path
+  %li.activetab= link_to 'History', favor_history_path
+  %li= link_to 'Regraphic Pet', favor_regraphic_pet_path
+  %li= link_to 'Custom Pet Graphic', favor_custom_pet_path
+  %li= link_to 'Transfer Favor', favor_transfer_path
+
+%table
+  %thead
+    %tr
+      %td When
+      - if @all
+        %td User
+      %td Favor
+      %td Description
+      %td Stripe ID
+  %tbody
+    - @favor_transactions.each do |favor_transaction|
+      %tr
+        %td= favor_transaction.created_at.strftime('%D %r')
+        - if @all
+          %td= link_to favor_transaction.user_id, user_path(favor_transaction.user_id)
+        %td= favor_transaction.amount
+        - if favor_transaction.description
+          %td= favor_transaction.description.html_safe
+        - else
+          %td N/A
+        %td= favor_transaction.stripe_id

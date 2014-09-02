@@ -1,0 +1,28 @@
+<h3>
+  <%= link_to 'Recipes', recipes_path %>
+  >
+  <%= @recipe.id %>
+</h3>
+
+<p>
+  <strong>Ingredients:</strong>
+  <%= @recipe.ingredients %>
+</p>
+
+<p>
+  <strong>Pretty Ingredients:</strong>
+  <%= pretty_ingredients(@recipe.ingredients).html_safe %>
+</p>
+
+<p>
+  <strong>Results:</strong>
+  <%= @recipe.results %>
+</p>
+
+<p>
+  <strong>Pretty Results:</strong>
+  <%= pretty_ingredients(@recipe.results).html_safe %>
+</p>
+
+<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+<%= link_to 'Back', recipes_path %>

@@ -1,0 +1,34 @@
+<h2>Listing Topics</h2>
+<div class="forumtb">
+<table>
+  <thead>
+    <tr>
+      <th>Name </th> 
+      <th>Last poster </th> 
+      <th>Last post at</th> 
+      <% if (current_user.is_admin ) %>
+	       <th></th>
+	       <th></th>
+	    <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @topics.each do |topic| %>
+      <tr>
+	    <td><%= link_to topic.name, forum_topic_path(@forum,topic) %></td>		    
+		<td><%= User.find(topic.last_poster_id).username %></td> 
+        <td><%= distance_of_time_in_words_to_now topic.last_post_at %> ago</td>         
+		<% if (current_user.is_admin ) %>
+        <td><%= link_to 'Edit', edit_forum_topic_path(@forum,topic) %></td>
+        <td><%= link_to 'Destroy', forum_topic_path(@forum,topic), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+<%= link_to 'New Topic', new_forum_topic_path(@forum) %> |
+<%= link_to 'Back to Forum List', Forum %> 

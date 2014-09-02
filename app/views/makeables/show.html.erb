@@ -1,0 +1,27 @@
+<p>
+  <strong>Difficulty:</strong>
+  <%= @makeable.difficulty %>
+</p>
+
+<p>
+  <strong>Item template:</strong>
+  <%= @makeable.item_template.name %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @makeable.quantity %>
+</p>
+
+<p>
+  <strong>Ingredients:</strong>
+  <%= @makeable.ingredients %>
+</p>
+
+<p>
+  <strong>Pretty Ingredients:</strong>
+  <%= pretty_ingredients(@makeable.ingredients) %>
+</p>
+
+<%= link_to 'Edit', edit_makeable_path(@makeable) %> |
+<%= link_to 'Back', makeables_path %>

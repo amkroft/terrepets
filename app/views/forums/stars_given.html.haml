@@ -1,0 +1,36 @@
+- content_for :title, 'TerrePets > Plaza > Stars Given'
+%h3 
+  = link_to 'Plaza', forums_path
+  > Stars Given
+
+%ul.tabbed
+  %li= link_to 'Forums', forums_path
+  %li= link_to 'IRC', forums_irc_path
+  %li.activetab= link_to 'Stars Given', forums_stars_given_path
+  %li= link_to 'Stars Received', forums_stars_received_path
+
+%p
+  You have given a total of
+  = pluralize(@total_stars_given, 'star') + '.'
+
+= will_paginate @star_logs
+
+%table{width: '100%'}
+  %thead
+    %tr
+      %td{width: '15px'}
+        = raw('<i class=\'fa fa-star\' style=\'color: #FFFF00;\'></i>')
+      %td{width: '50px'}
+        Post ID
+      %td Thread Title
+      %td{width: '125px'} 
+        Posted By
+  %tbody
+    - @star_logs.each do |star_log|
+      %tr
+        %td= star_log.count
+        %td= link_to star_log.post.id, forum_topic_post_path(star_log.post.topic.forum_id, star_log.post.topic, star_log.post)
+        %td= link_to star_log.post.topic.name, forum_topic_path(star_log.post.topic.forum_id, star_log.post.topic)
+        %td= link_to star_log.post.user.display_name, user_path(star_log.post.user)
+
+= will_paginate @star_logs

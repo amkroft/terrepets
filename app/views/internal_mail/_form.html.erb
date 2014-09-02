@@ -1,0 +1,55 @@
+<%= form_for @internal_mail, as: :internal_mail, url: internal_mail_path(@internal_mail) do |f| %>
+
+  <% if @internal_mail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@internal_mail.errors.count, "error") %> prohibited this message from being saved and sent:</h2>
+      <ul>
+      <% @internal_mail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <td>
+        From
+      </td>
+      <td>
+        <%= current_user.display_name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        To
+      </td>
+      <td>
+        <%= f.text_field :to_user_name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :subject %>
+      </td>
+      <td>
+        <%= f.text_field :subject, style: 'width: 300px;' %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <%= f.label :content %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <%= f.text_area :content %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan='2' align='right'>
+        <%= f.submit %>
+      </td>
+    </tr>
+  </table>
+<% end %>

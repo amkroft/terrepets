@@ -1,0 +1,31 @@
+- content_for :title, "Terrepets > The Pattern"
+%h3
+  The Pattern
+
+%ul.tabbed
+  %li.activetab= link_to 'Navigate', pattern_path
+  %li= link_to 'Overview', pattern_overview_path
+
+%p= "Welcome to the Pattern!  You are at location (#{@pattern_user.x},#{@pattern_user.y})"
+
+%div#pattern_stuff
+  %div#pattern_tiles{style: 'float: left'}
+    - (@pattern_user.y+2).downto(@pattern_user.y-2).each do |y|
+      - ((@pattern_user.x-2)..(@pattern_user.x+2)).each do |x|
+        - key = "#{x}-#{y}".to_sym
+        %div.pattern_tile{ id: key }
+          - if @pattern_tiles.has_key? key
+            = @pattern_tiles[key].text_tile.html_safe
+          - else
+            = PatternTile.empty_tile.html_safe
+      %div.endinventory
+    %div.endinventory
+
+  %div#pattern_movements{style: 'float: left'}
+    %ul
+      %li= direction_text(@pattern_tiles, @keys, :north, @pattern_user)
+      %li= direction_text(@pattern_tiles, @keys, :east, @pattern_user)
+      %li= direction_text(@pattern_tiles, @keys, :south, @pattern_user)
+      %li= direction_text(@pattern_tiles, @keys, :west, @pattern_user)
+
+%div.endinventory

@@ -1,0 +1,33 @@
+<h3>
+  Recipes -
+  <%= Recipe.count %>
+  total
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ingredients</th>
+      <th>Results</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recipes.each do |recipe| %>
+      <tr>
+        <td><%= pretty_ingredients(recipe.ingredients).html_safe %></td>
+        <td><%= pretty_ingredients(recipe.results).html_safe %></td>
+        <td><%= link_to raw("<i class='fa fa-search fa-lg' alt='Show' title='Show'></i>"), recipe %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_recipe_path(recipe) %></td>
+        <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Recipe', new_recipe_path %>

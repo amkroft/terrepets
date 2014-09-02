@@ -1,0 +1,139 @@
+<%= form_for(@item_template) do |f| %>
+  <% if @item_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item_template.errors.count, "error") %> prohibited this item template from being saved:</h2>
+
+      <ul>
+      <% @item_template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+    <%= f.text_field :category %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br>
+    <%= f.number_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :recycle_ingredients %><br>
+    <%= f.text_field :recycle_ingredients %>
+  </div>
+
+  <h3>Food</h3>
+  <div class="field">
+    <%= f.label :edible %><br>
+    <%= f.check_box :edible %>
+  </div>
+  <div class="field">
+    <%= f.label :edible_size %><br>
+    <%= f.number_field :edible_size %>
+  </div>
+
+  <h3>Equipment</h3>
+  <div class="field">
+    <%= f.label :is_equipment %><br>
+    <%= f.check_box :is_equipment %>
+  </div>
+  <div class="field">
+    <%= f.label :durability %><br>
+    <%= f.number_field :durability %>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <td colspan='2'>Equip Skills</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= f.label :crafting %></td>
+        <td><%= f.number_field :equip_crafting %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :fishing %></td>
+        <td><%= f.number_field :equip_fishing %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :gathering %></td>
+        <td><%= f.number_field :equip_gathering %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :hunting %></td>
+        <td><%= f.number_field :equip_hunting %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :lumberjacking %></td>
+        <td><%= f.number_field :equip_lumberjacking %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :mining %></td>
+        <td><%= f.number_field :equip_mining %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :smithing %></td>
+        <td><%= f.number_field :equip_smithing %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :thieving %></td>
+        <td><%= f.number_field :equip_thieving %></td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <td colspan='2'>Equip Stats</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= f.label :athletics %></td>
+        <td><%= f.number_field :equip_athletics %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :dexterity %></td>
+        <td><%= f.number_field :equip_dexterity %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :intelligence %></td>
+        <td><%= f.number_field :equip_intelligence %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :perception %></td>
+        <td><%= f.number_field :equip_perception %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :stamina %></td>
+        <td><%= f.number_field :equip_stamina %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :stealth %></td>
+        <td><%= f.number_field :equip_stealth %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :strength %></td>
+        <td><%= f.number_field :equip_strength %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :wits %></td>
+        <td><%= f.number_field :equip_wits %></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

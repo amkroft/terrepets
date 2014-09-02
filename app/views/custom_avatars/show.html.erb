@@ -1,0 +1,26 @@
+<p>
+  <%= image_tag @custom_avatar.image %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @custom_avatar.name %>
+</p>
+
+<p>
+  <strong>Uploader:</strong>
+  <%= @custom_avatar.uploader %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @custom_avatar.author %>
+</p>
+
+<p>
+  <strong>Rights:</strong>
+  <%= @custom_avatar.rights %>
+</p>
+
+<%= link_to 'Edit', edit_custom_avatar_path(@custom_avatar) %> |
+<%= link_to 'Back', custom_avatars_path %>

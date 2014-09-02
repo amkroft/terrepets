@@ -1,0 +1,54 @@
+#loggedin
+  #logout
+    = link_to 'My Account', my_account_index_path
+    |
+    - if current_user.has_unseen_mail
+      = link_to raw("<span class=\"fa-stack fa-lg\" style=\"height: .8em; width: 1em; line-height: .75em;\"><i class=\"fa fa-envelope-o fa-stack-1x\"></i><i class=\"fa fa-exclamation fa-stack-1x\" style=\"color: red;\"></i></span>"), internal_mail_index_path
+    - else
+      = link_to raw("<i class='fa fa-envelope-o fa-lg' alt='Mailbox' title='Mailbox'></i>"), internal_mail_index_path
+    |
+    = link_to raw("<i class='fa fa-bar-chart-o fa-lg' alt='Statistics' title='Statistics'></i>"), statistics_path
+    |
+    = link_to raw("<i class='fa fa-sign-out fa-lg' alt='Logout' title='Logout'></i>"), destroy_user_session_path, :method => :delete
+  #resident_status
+    = link_to current_user.display_name, user_path(current_user)
+    - if current_user.has_notification
+      |
+    - if current_user.has_incoming
+      = link_to raw("<i style='color: darkgoldenrod;' class='fa fa-archive' alt='Incoming' title='Incoming'></i>"), incoming_path
+    - if current_user.city_hall_notice
+      = link_to raw("<i style='color: darkgoldenrod;' class='fa fa-bell-o' alt='New City Hall Post' title='New City Hall Post'></i>"), forum_path(Forum.city_hall_forum_id)
+    - if current_user.has_unseen_mail
+      = link_to raw("<i class='fa fa-envelope-o' alt='New Mail' title='New Mail'></i>"), internal_mail_index_path
+    - if current_user.has_new_sales
+      = link_to raw("<i style='color: #993333;' class='fa fa-tags' alt='New Store Sales' title='New Store Sales'></i>"), store_logs_path
+    - if current_user.has_new_stars
+      = link_to raw("<i style='color: darkgoldenrod;' class='fa fa-star' alt='New Stars' title='New Stars'></i>"), forums_stars_received_path
+    - if current_user.trade_notice
+      = link_to raw("<i style='color: darkblue;' class='fa fa-exchange' alt='New Trade Activity' title='New Trade Activity'></i>"), trading_post_path
+  %ul.wealth
+    %li
+      = current_user.money
+      Money
+      / %s m
+    %li
+      = current_user.favor
+      = link_to "Favor", favor_path
+    %li#user_stars
+      = "#{current_user.stars} Stars"
+      / %i.fa.fa-star-o
+    - if current_user.karma > 0
+      %li
+        = current_user.karma
+        Karma
+  %ul.megamenu    
+    %li.mm_item= link_to 'House', house_path
+    %li.mm_item= link_to 'Plaza', forums_path    
+    %li.mm_item= link_to 'Bank', bank_path
+    %li.mm_item= link_to 'Pattern', pattern_path
+    %li.mm_item= link_to 'Commerce', trading_post_path    
+    %li.mm_item= link_to 'Services', grocery_store_path
+    %li.mm_item= link_to 'Pet Shelter', pet_shelter_path    
+    %li.mm_item= link_to 'User Directory', users_path    
+    -if current_user.is_admin
+      %li.mm_item= link_to 'Admin', admin_path                                      

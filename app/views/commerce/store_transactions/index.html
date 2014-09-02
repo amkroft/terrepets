@@ -1,0 +1,35 @@
+<% content_for :title, "Terrepets > Store Logs" %>
+<h3>
+  Commerce > 
+  Store Logs
+</h3>
+
+<ul class='tabbed'>
+  <li><%= link_to 'Trading Post', trading_post_path %></li>
+  <li><%= link_to 'Flea Market', flea_market_path %></li>
+  <li><%= link_to 'Stores', stores_path %></li>
+  <li class='activetab'><%= link_to 'Store Logs', store_logs_path %></li>
+</ul>
+
+<%= will_paginate @store_transactions %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time Stamp</th>
+      <th>Amount</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @store_transactions.each do |store_transaction| %>
+      <tr>
+        <th><%= store_transaction.created_at.strftime('%D %I:%M:%S%P') %></th>
+        <th class='centered'><%= store_transaction.amount %></th>
+        <th><%= store_transaction.description.html_safe %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @store_transactions %>

@@ -1,0 +1,61 @@
+<h3>
+  Item Templates -
+  <%= ItemTemplate.count %>
+  total
+</h3>
+
+<%= will_paginate @item_templates %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Type</th>
+      <th>GV</th>
+      <th>Rcy</th>
+      <th>Edible</th>
+      <th>ES</th>
+      <th>Equip</th>
+      <th>DH</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_templates.each do |item_template| %>
+      <tr>
+        <td><%= link_to item_template.name, item_template %></td>
+        <td><%= image_tag item_template.image %></td>
+        <td><%= item_template.category %></td>
+        <td><%= item_template.value %></td>
+        <td>
+          <% if item_template.recyclable? %>
+            <i class='fa fa-check fa-lg'></i>
+          <% end %>
+        </td>
+        <td>
+          <% if item_template.edible %>
+            <i class='fa fa-check fa-lg'></i>
+          <% end %>
+        </td>
+        <td><%= item_template.edible_size %></td>
+        <td>
+          <% if item_template.is_equipment %>
+            <i class='fa fa-check fa-lg'></i>
+          <% end %>
+        </td>
+        <td><%= item_template.durability %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil fa-lg' alt='Edit' title='Edit'></i>"), edit_item_template_path(item_template) %></td>
+        <td><%= link_to raw("<i class='fa fa-times fa-lg red' alt='Destroy' title='Destroy'></i>"), item_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @item_templates %>
+
+<br>
+
+<%= link_to 'New Item Template', new_item_template_path %>

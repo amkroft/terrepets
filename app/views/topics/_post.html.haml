@@ -1,0 +1,33 @@
+- userfind = User.find(post.user_id)
+.plazapost{ id: "post_#{post.id}" }
+  .plazapost-titlebar
+    .plazapost-decoration
+      - if post.user_id != current_user.id
+        / = link_to raw('<i class=\'fa fa-star\' style=\'color: #FFFF00;\'></i>'), star_post_path(@forum, @topic, post, {page: @posts.current_page})
+        = link_to raw('<i class=\'fa fa-star\' style=\'color: #FFFF00;\'></i>'), star_post_ajax_path(post), class: 'star-post'
+      - else
+        %i.fa.fa-star{ style: 'color: #FFFF00;' }
+      %span.plazapost-stars= "x#{post.stars}"
+    .plazapost-title
+      / - if post.id == @topic.first_post_id
+      / - @topic.name
+  .plazapost-mainbox
+    .plazapost-resident
+      = link_to userfind.display_name,user_path(userfind)
+      - if userfind.avatar
+        %br
+        = image_tag(userfind.avatar.image)
+    .plazapost-contentbox
+      .plazapost-content
+        = clean_post_content(post.content).html_safe
+      .plazapost-footer
+        .dim.em
+          Posted
+          = post.created_at.strftime("%Y.%m.%d %l:%M%P")
+        %div
+          - if can? :destroy, post
+            = link_to 'Delete Post', [@forum, @topic, post], method: :delete, data: { confirm: 'Are you sure?' }
+            |
+          - if can? :update, post
+            = link_to 'Edit Post', edit_forum_topic_post_path(@forum, @topic, post)
+  .clear

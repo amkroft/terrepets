@@ -1,0 +1,19 @@
+<div style="height: 35px;">
+  <!-- Much sneaky <3 to Eyes -->
+  <table id='toolbar'>
+    <tr>
+      <td>
+        <%= submit_tag 'Feed to' %>
+        <%= select_tag :pet_id, feed_pet_options(@pets) %>
+      </td>
+      <td><%= submit_tag "Gamesell", data: { confirm: 'Are you sure you want to gamesell these items?' } %></td>
+      <td>
+        <%= submit_tag 'Move' %>
+        <%= select_tag :location, options_for_select([['My Store', 1]]) %>
+      </td>
+      <td>
+        <%= submit_tag 'Prepare' %>
+      </td>
+    </tr>
+  </table>
+</div>

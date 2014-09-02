@@ -1,0 +1,66 @@
+- content_for :title, 'Terrepets > Trading Post'
+%h3
+  Commerce
+  \>
+  =link_to 'Trading Post', trading_post_path
+  \>
+  Negotiate Trade
+
+%ul.tabbed
+  %li.activetab= link_to 'Trading Post', trading_post_path
+  %li= link_to 'Flea Market', flea_market_path
+  %li= link_to 'Stores', stores_path
+  %li= link_to 'Store Logs', store_logs_path
+
+= form_for(@item_trade, :url => process_trade_negotiation_path, :html => { method: :post }) do |f|
+  - if @item_trade.errors.any?
+    %div#error_explanation
+      %h2
+        = pluralize(@custom_pet_template.errors.count, 'error')
+        prohibited this custom_pet_template from being saved:
+      %ul
+        - @custom_pet_template.errors.full_messages.each do |msg|
+          %li= msg
+  %table{style: 'margin-bottom: 0px;'}
+    %tbody
+      %tr
+        - other_user = User.find(@item_trade.other_user(current_user))
+        %td= f.label :trade_with
+        %td
+          - if @item_trade.user_1_id != current_user.id && @item_trade.anonymous
+            %em anonymous
+          - else
+            = link_to other_user.display_name, user_path(other_user), target: '_blank'
+      %tr
+        %td= f.label :message
+        %td= f.text_field :message
+      %tr
+        %td= f.label :money
+        %td= f.number_field :money_2
+
+  = render partial: 'trade_items'
+  = f.submit 'Negotiate Trade'
+  = button_to_function 'Show Items', "this.style.visibility = 'hidden';showItems()"
+
+:javascript
+  function showItems() {
+    var table = document.getElementById("trade_items");
+    table.style.display = "table";
+  }
+
+  // https://github.com/ThatGuyBen/PsyPets/blob/a22ba399c051f2a8ea38e9e0f48369f9606fd557/js/ajaxtrades.js
+  // Idea: Don't load items until user hits that button
+  // function show_items_to_trade()
+  // {
+  //   $('#show_items_button').attr('disabled', true);
+  //   $('#items_to_trade').html('<h5>Items to Trade</h5><p><img src="gfx/throbber.gif" alt="loading..." /></p>');
+
+  //   $.ajax({
+  //     'type': 'POST',
+  //     'url': 'ajax_get_inventory_to_trade.php',
+  //     success: function(data)
+  //     {
+  //       $('#items_to_trade').html(data);
+  //     }
+  //   });
+  // }

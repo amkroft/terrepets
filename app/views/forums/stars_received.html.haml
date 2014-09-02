@@ -1,0 +1,62 @@
+- content_for :title, 'TerrePets > Plaza > Stars Received'
+%h3 
+  = link_to 'Plaza', forums_path
+  > Stars Received
+
+%ul.tabbed
+  %li= link_to 'Forums', forums_path
+  %li= link_to 'IRC', forums_irc_path
+  %li= link_to 'Stars Given', forums_stars_given_path
+  %li.activetab= link_to 'Stars Received', forums_stars_received_path
+
+%p
+  You've been given 
+  = succeed '.' do
+    = pluralize(@star_count,'star')
+%p
+  Click on a post ID to jump to that post. Click on a thread title to visit the first page of the thread.
+
+
+- if @newly_starred_posts
+  %h4 Newly Starred Posts
+  %table{width: '100%'}
+    %thead
+      %tr
+        %td{width: '15px'}
+          = raw('<i class=\'fa fa-star\' style=\'color: #FFFF00;\'></i>')
+        %td{width: '50px'}
+          Post ID
+        %td Thread Title
+        %td{width: '125px'} 
+          Posted
+    %tbody
+      - @newly_starred_posts.each do |post|
+        %tr
+          %td= post.stars
+          %td= link_to post.id, forum_topic_post_path(post.topic.forum_id, post.topic, post)
+          %td= link_to post.topic.name, forum_topic_path(post.topic.forum_id, post.topic)
+          %td= distance_of_time_in_words_to_now post.created_at
+
+%h4 All Starred Posts
+
+= will_paginate @posts
+
+%table{width: '100%'}
+  %thead
+    %tr
+      %td{width: '15px'}
+        = raw('<i class=\'fa fa-star\' style=\'color: #FFFF00;\'></i>')
+      %td{width: '50px'}
+        Post ID
+      %td Thread Title
+      %td{width: '125px'} 
+        Posted
+  %tbody
+    - @posts.each do |post|
+      %tr
+        %td= post.stars
+        %td= link_to post.id, forum_topic_post_path(post.topic.forum_id, post.topic, post)
+        %td= link_to post.topic.name, forum_topic_path(post.topic.forum_id, post.topic)
+        %td= distance_of_time_in_words_to_now post.created_at
+
+= will_paginate @posts

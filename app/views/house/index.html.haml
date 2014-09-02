@@ -1,0 +1,55 @@
+- content_for :title, "Terrepets > Your House"
+
+%h3 Hours
+
+- if Rails.env.development?
+  %p
+    Last time hours were run:
+    = @house.last_hour_run.strftime("%Y.%m.%d %l:%M%P")
+
+Hours available to run: 
+= @hours_to_run
+%br
+You will collect allowance in
+= pluralize(24 - @house.allowance_hours, 'hour') + '.'
+%br
+
+- if @hours_to_run > 0
+  %table
+    %tr
+      %td= button_to 'Run an Hour', action: 'run_hours', data: {hours: :one}
+      - if @hours_to_run >= 8
+        %td= button_to 'Run 8 Hours', action: 'run_hours', data: {hours: :eight}
+      - if @hours_to_run > 1
+        %td= button_to 'Run all Hours', action: 'run_hours', data: {hours: :all}
+- else
+  Your pets will be ready to do stuff in 
+  = pluralize(@minutes_to_wait,'minute') + '.'
+
+- if current_user.is_admin && !Rails.env.production?
+  %table
+    %tr
+      %td= button_to 'Force run an hour', action: 'force_run_hour', data: {hours: :one}
+      %td= button_to 'Force run 8 hours', action: 'force_run_hour', data: {hours: :eight}
+
+- if @notes
+  %h3 Logs
+  %p= raw(@notes)
+
+%h3 Pets
+%ul{class: 'pets'}
+  - @pets.each do |pet|
+    = render 'pet', pet: pet
+
+%div{:class => 'endinventory'}
+%hr
+
+%h3 Items
+= form_tag items_action_path, method: :post do |f|
+  = render partial: 'item_actions'
+  - if params[:condensed] == 'true'
+    = render partial: 'condensed_items'
+  - else
+    = render partial: 'detailed_items'
+
+%div{:class => 'endinventory'}

@@ -1,0 +1,33 @@
+<h3> Welcome to TerrePets Mail </h3>
+
+<ul class='tabbed'>
+	<li class='activetab'><%= link_to 'Inbox', internal_mail_index_path %></li>
+	<li><%= link_to 'Send Mail', new_internal_mail_path %></li>	
+</ul>
+
+<%= form_tag internal_mail_mdestroy_path, method: :delete do |f| %>
+  <%= submit_tag 'Delete Messages', data: { confirm: "Are you sure you want to delete these messages?" }  %>
+  <table width='100%'>
+    <thead>
+      <tr>
+        <td width='5%'></td>
+        <td width='15%'>From</td>
+        <td>Subject</td>
+        <td width='15%'>Received</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @internal_mails.each do |internal_mail| %>
+        <tr class="<%= 'bold' if !internal_mail.read %>">
+          <% from_user = User.find(internal_mail.from_user_id) -%>
+          <td><%= check_box_tag 'mail[]', internal_mail.id %></td>
+          <td><%= link_to from_user.display_name, user_path(from_user) %></td>
+          <% title = internal_mail.subject.to_s.empty? ? "untitled" : internal_mail.subject %>
+          <td><%= link_to title, internal_mail_path(internal_mail) %></td>
+          <td><%= time_ago_in_words(internal_mail.created_at) %> ago</td>
+        </td>
+      <% end %>
+    </tbody>
+  </table>
+  <%= submit_tag 'Delete Messages', data: { confirm: "Are you sure you want to delete these messages?" }  %>
+<% end %>

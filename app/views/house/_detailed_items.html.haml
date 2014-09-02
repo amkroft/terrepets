@@ -1,0 +1,21 @@
+%table{id: 'items'}
+  %thead
+    %tr
+      %td
+        %input{type: "checkbox", onclick: "checkAll(this)"}
+      %td
+      %td= sortable 'name'
+      %td= sortable 'value', 'GV'
+      %td= sortable 'note'
+  %tbody
+    - @items.each do |item|
+      %tr{style: item.recently_acquired && 'font-weight:bold;' }
+        %td= check_box_tag 'items[]', item.id
+        %td= item_encyclopedia_link(item.item_template.name)
+        %td= item.item_template.name
+        %td= item.item_template.value
+        %td
+          = item.origin_note
+          - if item.user_note && item.origin_note
+            %br
+          = item.user_note

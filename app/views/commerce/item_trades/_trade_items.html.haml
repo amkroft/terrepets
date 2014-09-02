@@ -1,0 +1,24 @@
+%div#trade_items{hidden: true}
+  %p Items
+  %table
+    %thead
+      %tr
+        %th
+        %th
+        %th Name
+        / %th Condition
+        %th GV
+        %th Comment
+    %tbody
+      - @items.each do |item|
+        %tr
+          %td= check_box_tag 'items[]', item.id
+          %td= item_encyclopedia_link(item.item_template.name)
+          %td= item.item_template.name
+          / %td= item.durability_text
+          %td= item.item_template.value
+          %td
+            = item.origin_note
+            - if item.user_note && item.origin_note
+              %br
+            = item.user_note
